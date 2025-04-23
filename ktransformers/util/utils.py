@@ -234,6 +234,7 @@ def prefill_and_generate(model, tokenizer, inputs, max_new_tokens=10000, use_cud
         
         cuda_graph_runner = None
             
+    # return tokens
         start_time = time.time()
         for i in range(1, max_new_tokens):
             if use_flashinfer_mla:
