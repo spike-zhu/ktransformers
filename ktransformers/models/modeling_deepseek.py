@@ -269,9 +269,9 @@ class DeepseekV2RMSNorm(nn.Module):
 
         ans_float32 = (temp * y).to(torch.float32)
 
-        # Save data to file
-        if self.save_path is not None:
-            self.save_data(hidden_states_input_float32.cpu(), self.weight_float32.cpu(), ans_float32.cpu())
+        # # Save data to file
+        # if self.save_path is not None:
+        #     self.save_data(hidden_states_input_float32.cpu(), self.weight_float32.cpu(), ans_float32.cpu())
         
         return (temp * y).to(input_dtype)
 
