@@ -559,6 +559,25 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1):
     k_embed = (k * cos) + (rotate_half(k) * sin)
     return q_embed, k_embed
 
+# class DeepseekV2MLP(nn.Module):
+#     def __init__(self, config, hidden_size=None, intermediate_size=None):
+#         super().__init__()
+#         self.config = config
+#         self.hidden_size = config.hidden_size if hidden_size is None else hidden_size
+#         self.intermediate_size = (
+#             config.intermediate_size if intermediate_size is None else intermediate_size
+#         )
+
+#         self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+#         self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+#         self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=False)
+#         self.act_fn = ACT2FN[config.hidden_act]
+
+#     def forward(self, x):
+#         act = self.act_fn(self.gate_proj(x)) * self.up_proj(x)
+#         down_proj = self.down_proj(act)
+#         return down_proj
+
 class DeepseekV2MLP(nn.Module):
     def __init__(self, config, hidden_size=None, intermediate_size=None):
         super().__init__()
@@ -571,12 +590,169 @@ class DeepseekV2MLP(nn.Module):
         self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
         self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
         self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=False)
-        self.act_fn = ACT2FN[config.hidden_act]
+        # self.act_fn = ACT2FN[config.hidden_act]
 
     def forward(self, x):
-        act = self.act_fn(self.gate_proj(x)) * self.up_proj(x)
-        down_proj = self.down_proj(act)
+        import torch
+        import ctypes
+        from ctypes import POINTER, Structure, c_int32, c_void_p, c_uint64
+        import sys
+        sys.path.append("/home/wanghaojie/zhushuang/InfiniCore/test/infiniop")
+
+        from libinfiniop import (
+            infiniopHandle_t,
+            infiniopTensorDescriptor_t,
+            open_lib,
+            to_tensor,
+            get_test_devices,
+            check_error,
+            rearrange_if_needed,
+            create_workspace,
+            test_operator,
+            get_args,
+            debug,
+            get_tolerance,
+            profile_operation,
+            InfiniDeviceEnum,
+            infiniDeviceEnum_str_map,
+        )
+
+        device = InfiniDeviceEnum.NVIDIA
+        torch_device = infiniDeviceEnum_str_map[device]
+
+        class SwiGLUDescriptor(Structure):
+            _fields_ = [("device", c_int32)]
+        infiniopSwiGLUDescriptor_t = POINTER(SwiGLUDescriptor)
+
+        lib = open_lib()
+        lib.infiniopCreateSwiGLUDescriptor.restype = c_int32
+        lib.infiniopCreateSwiGLUDescriptor.argtypes = [
+            infiniopHandle_t,
+            POINTER(infiniopSwiGLUDescriptor_t),
+            infiniopTensorDescriptor_t,
+            infiniopTensorDescriptor_t,
+            infiniopTensorDescriptor_t,
+        ]
+
+        lib.infiniopGetSwiGLUWorkspaceSize.restype = c_int32
+        lib.infiniopGetSwiGLUWorkspaceSize.argtypes = [
+            infiniopSwiGLUDescriptor_t,
+            POINTER(c_uint64),
+        ]
+
+        lib.infiniopSwiGLU.restype = c_int32
+        lib.infiniopSwiGLU.argtypes = [
+            infiniopSwiGLUDescriptor_t,
+            c_void_p,
+            c_uint64,
+            c_void_p,
+            c_void_p,
+            c_void_p,
+            c_void_p,
+        ]
+
+        lib.infiniopDestroySwiGLUDescriptor.restype = c_int32
+        lib.infiniopDestroySwiGLUDescriptor.argtypes = [
+            infiniopSwiGLUDescriptor_t,
+        ]
+
+        input_dtype = self.gate_proj(x).dtype
+
+        infinicore_swiglu_input_fp32_b = self.gate_proj(x).to(torch.float32)
+        infinicore_swiglu_input_fp32_a = self.up_proj(x).to(torch.float32)
+        infinicore_swiglu_input_fp32_c = torch.ones_like(infinicore_swiglu_input_fp32_b)
+
+        a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [infinicore_swiglu_input_fp32_a, infinicore_swiglu_input_fp32_b, infinicore_swiglu_input_fp32_c]]
+
+        descriptor = infiniopSwiGLUDescriptor_t()
+
+        def create_handle(lib):
+            handle = infiniopHandle_t()
+            check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
+            return handle
+
+        lib.infinirtSetDevice(device, ctypes.c_int(0))
+        handle = create_handle(lib)
+
+        check_error(
+            lib.infiniopCreateSwiGLUDescriptor(
+                handle,
+                ctypes.byref(descriptor),
+                c_tensor.descriptor,
+                a_tensor.descriptor,
+                b_tensor.descriptor,
+            )
+        )
+
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [a_tensor, b_tensor, c_tensor]:
+            tensor.destroyDesc(lib)
+
+        workspace_size = c_uint64(0)
+        check_error(
+            lib.infiniopGetSwiGLUWorkspaceSize(descriptor, ctypes.byref(workspace_size))
+        )
+        workspace = create_workspace(workspace_size.value, infinicore_swiglu_input_fp32_c.device)
+
+        def lib_swiglu():
+            check_error(
+                lib.infiniopSwiGLU(
+                    descriptor, 
+                    workspace.data_ptr() if workspace is not None else None,
+                    workspace_size.value,
+                    c_tensor.data, a_tensor.data, b_tensor.data, None
+                )
+            )
+
+        lib_swiglu()
+        infinicore_swiglu_input_fp32_c = infinicore_swiglu_input_fp32_c.to(input_dtype)
+        down_proj = self.down_proj(infinicore_swiglu_input_fp32_c)
+
+        check_error(lib.infiniopDestroySwiGLUDescriptor(descriptor))
         return down_proj
+
+        # act = self.act_fn(self.gate_proj(x)) * self.up_proj(x)
+        # down_proj = self.down_proj(act)
+        # return down_proj
+
+
+
+# class DeepseekV2MLP(nn.Module):
+#     def __init__(self, config, hidden_size=None, intermediate_size=None):
+#         super().__init__()
+#         self.config = config
+#         self.hidden_size = config.hidden_size if hidden_size is None else hidden_size
+#         self.intermediate_size = (
+#             config.intermediate_size if intermediate_size is None else intermediate_size
+#         )
+
+#         self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+#         self.up_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=False)
+#         self.down_proj = nn.Linear(self.intermediate_size, self.hidden_size, bias=False)
+#         # self.act_fn = ACT2FN[config.hidden_act]
+
+#     def forward(self, x):
+#         print("[INFO]DeepseekV2MLP x - Type:", type(x))
+#         print("[INFO]DeepseekV2MLP x - Shape:", x.shape)
+#         print("[INFO]DeepseekV2MLP x - Dtype:", x.dtype)
+#         print("[INFO]DeepseekV2MLP x - Device:", x.device)
+
+
+#         print("[INFO]DeepseekV2MLP self.gate_proj(x) - Type:", type(self.gate_proj(x)))
+#         print("[INFO]DeepseekV2MLP self.gate_proj(x) - Shape:", self.gate_proj(x).shape)
+#         print("[INFO]DeepseekV2MLP self.gate_proj(x) - Dtype:", self.gate_proj(x).dtype)
+#         print("[INFO]DeepseekV2MLP self.gate_proj(x) - Device:", self.gate_proj(x).device)
+
+#         temp1 = self.act_fn(self.gate_proj(x))
+#         print("[INFO]DeepseekV2MLP temp1 - Type:", type(temp1))
+#         print("[INFO]DeepseekV2MLP temp1 - Shape:", temp1.shape)
+#         print("[INFO]DeepseekV2MLP temp1 - Dtype:", temp1.dtype)
+#         print("[INFO]DeepseekV2MLP temp1 - Device:", temp1.device)
+
+#         act = self.act_fn(self.gate_proj(x)) * self.up_proj(x)
+#         down_proj = self.down_proj(act)
+#         return down_proj
+
 
 class MoEGate(nn.Module):
     def __init__(self, config):
