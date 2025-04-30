@@ -203,6 +203,8 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             **kwargs,
         ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
 
+        # print("[INFO] into forward_linux_triton")
+
         bsz, q_len, _ = hidden_states.size()
 
         if self.q_lora_rank is None:
@@ -355,6 +357,8 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             cache_position: Optional[torch.Tensor] = None,
             **kwargs,
         ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
+
+        print("[INFO] into forward_linux_flashinfer")
 
         bsz, q_len, _ = hidden_states.size()
 
@@ -596,6 +600,9 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
         **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         if os.name == 'nt' or get_compute_capability()<8 or device_manager.gpu_vendor != GPUVendor.NVIDIA:
+            
+            print("[INFO] forward choose forward_windows")
+
             return self.forward_windows(
                 hidden_states,
                 attention_mask,
@@ -608,6 +615,7 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             )
         else:
             if flashinfer_enabled:
+                print("[INFO] forward choose flashinfer_enabled")
                 return self.forward_linux_flashinfer(
                     hidden_states,
                     attention_mask,
@@ -619,6 +627,7 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
                     **kwargs,
                 )
             else:
+                # print("[INFO] forward choose forward_linux_triton")
                 return self.forward_linux_triton(
                     hidden_states,
                     attention_mask,

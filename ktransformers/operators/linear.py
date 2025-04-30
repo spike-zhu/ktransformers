@@ -271,17 +271,6 @@ class KLinearTorch(KLinearBase):
 
         x = infinicore_gemm_input_c_fp32.to(dtype = input_dtype, device = out_device)
         return x
-    
-
-        # dtype = x.dtype
-        # out_device = x.device
-        # # TODO: support CUDA Graph when using cpu, but CPUInfer is recommended.
-        # x = x.to(device=self.device, dtype=self.dtype)
-        # x = x @ self.weight
-        # if self.has_bias:
-        #     x = x + self.bias
-        # x = x.to(dtype=dtype, device=out_device)
-        # return x
 
     def load(self, w: dict | nn.Parameter | tuple | None = None, device: str|None = None):
         if self.loaded: return

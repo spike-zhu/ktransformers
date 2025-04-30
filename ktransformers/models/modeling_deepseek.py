@@ -1566,25 +1566,18 @@ class DeepseekV2DecoderLayer(nn.Module):
             )
             else DeepseekV2MLP(config)
         )
-        # 声明 global_epoch 是全局变量
+        # global_epoch is global variable
         global global_epoch
-        print("[INFO] into DeepseekV2DecoderLayer-input_layernorm")
-        print("[INFO] global_epoch:", global_epoch)
         self.log_path = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/z_data-test/infer_ans_{global_epoch}.npz"
-
         self.input_layernorm = DeepseekV2RMSNorm(
             config.hidden_size, eps=config.rms_norm_eps, save_path = self.log_path
         )
         global_epoch = global_epoch + 1
 
-        print("[INFO] into DeepseekV2DecoderLayer-post_attention_layernorm")
-        print("[INFO] global_epoch:", global_epoch)
         self.log_path = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/z_data-test/infer_ans_{global_epoch}.npz"
- 
         self.post_attention_layernorm = DeepseekV2RMSNorm(
             config.hidden_size, eps=config.rms_norm_eps, save_path = self.log_path
         )
-
         global_epoch = global_epoch + 1
 
     def forward(
@@ -1795,9 +1788,6 @@ class DeepseekV2Model(DeepseekV2PreTrainedModel):
 
         # 声明 global_epoch 是全局变量
         global global_epoch
-        print("[INFO] into DeepseekV2Model-norm")
-        print("[INFO] global_epoch:", global_epoch)
-
         self.log_path = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/z_data-test/infer_ans_{global_epoch}.npz"
         self.norm = DeepseekV2RMSNorm(config.hidden_size, eps=config.rms_norm_eps, save_path = self.log_path)
         global_epoch = global_epoch + 1
