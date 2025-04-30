@@ -116,10 +116,10 @@ def local_chat(
         
     import time
     print("[INFO-test] into optimize_and_load_gguf ...")
-    time.sleep(5)
+
     optimize_and_load_gguf(model, optimize_config_path, gguf_path, config)
     print("[INFO-test] end optimize_and_load_gguf ...")
-    time.sleep(10)
+
     
     try:
         model.generation_config = GenerationConfig.from_pretrained(model_path)
