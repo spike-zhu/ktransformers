@@ -129,6 +129,66 @@ class KLinearBase(ABC):
 #     x = x.to(dtype=dtype, device=out_device)
 #     return x
 
+import ctypes
+from ctypes import POINTER, Structure, c_int32, c_size_t, c_uint64, c_void_p, c_float
+import sys
+sys.path.append("/home/wanghaojie/zhushuang/InfiniCore/test/infiniop")
+from libinfiniop import (
+    infiniopHandle_t,
+    infiniopTensorDescriptor_t,
+    open_lib,
+    to_tensor,
+    check_error,
+    create_workspace,
+    InfiniDeviceEnum,
+    infiniDeviceEnum_str_map,
+)
+
+class GemmDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+infiniopGemmDescriptor_t = POINTER(GemmDescriptor)
+
+lib = open_lib()
+lib.infiniopCreateGemmDescriptor.restype = c_int32
+lib.infiniopCreateGemmDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopGemmDescriptor_t),
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+]
+
+lib.infiniopGetGemmWorkspaceSize.restype = c_int32
+lib.infiniopGetGemmWorkspaceSize.argtypes = [
+    infiniopGemmDescriptor_t,
+    POINTER(c_size_t),
+]
+
+lib.infiniopGemm.restype = c_int32
+lib.infiniopGemm.argtypes = [
+    infiniopGemmDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+    c_float,
+    c_float,
+    c_void_p,
+]
+
+lib.infiniopDestroyGemmDescriptor.restype = c_int32
+lib.infiniopDestroyGemmDescriptor.argtypes = [
+    infiniopGemmDescriptor_t,
+]
+
+def create_handle(lib):
+    handle = infiniopHandle_t()
+    check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
+    return handle
+
+
+
 class KLinearTorch(KLinearBase):
     def __init__(
         self,
@@ -146,60 +206,9 @@ class KLinearTorch(KLinearBase):
         self.has_bias = False
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-
-        import torch
-        import ctypes
-        from ctypes import POINTER, Structure, c_int32, c_size_t, c_uint64, c_void_p, c_float
-        from libinfiniop import (
-            infiniopHandle_t,
-            infiniopTensorDescriptor_t,
-            open_lib,
-            to_tensor,
-            check_error,
-            create_workspace,
-            InfiniDeviceEnum,
-            infiniDeviceEnum_str_map,
-        )
+        print("[INFO] into KLinearTorch forward ---")
 
         device = InfiniDeviceEnum.NVIDIA
-        torch_device = infiniDeviceEnum_str_map[device]
-        class GemmDescriptor(Structure):
-            _fields_ = [("device", c_int32)]
-        infiniopGemmDescriptor_t = POINTER(GemmDescriptor)
-
-        lib = open_lib()
-        lib.infiniopCreateGemmDescriptor.restype = c_int32
-        lib.infiniopCreateGemmDescriptor.argtypes = [
-            infiniopHandle_t,
-            POINTER(infiniopGemmDescriptor_t),
-            infiniopTensorDescriptor_t,
-            infiniopTensorDescriptor_t,
-            infiniopTensorDescriptor_t,
-        ]
-
-        lib.infiniopGetGemmWorkspaceSize.restype = c_int32
-        lib.infiniopGetGemmWorkspaceSize.argtypes = [
-            infiniopGemmDescriptor_t,
-            POINTER(c_size_t),
-        ]
-
-        lib.infiniopGemm.restype = c_int32
-        lib.infiniopGemm.argtypes = [
-            infiniopGemmDescriptor_t,
-            c_void_p,
-            c_uint64,
-            c_void_p,
-            c_void_p,
-            c_void_p,
-            c_float,
-            c_float,
-            c_void_p,
-        ]
-
-        lib.infiniopDestroyGemmDescriptor.restype = c_int32
-        lib.infiniopDestroyGemmDescriptor.argtypes = [
-            infiniopGemmDescriptor_t,
-        ]
 
         input_dtype = x.dtype
         out_device = x.device
@@ -215,11 +224,6 @@ class KLinearTorch(KLinearBase):
         a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [infinicore_gemm_input_a_fp32, infinicore_gemm_input_b_fp32, infinicore_gemm_input_c_fp32]]
 
         descriptor = infiniopGemmDescriptor_t()
-
-        def create_handle(lib):
-            handle = infiniopHandle_t()
-            check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
-            return handle
 
         lib.infinirtSetDevice(device, ctypes.c_int(0))
         handle = create_handle(lib)
