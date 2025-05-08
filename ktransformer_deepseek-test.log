@@ -1872,611 +1872,431 @@ loading blk.59.attn_norm.weight to cuda:0
 loading blk.59.ffn_norm.weight to cuda:0
 loading output_norm.weight to cuda:0
 [INFO-test] end optimize_and_load_gguf ...
-Chat: [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-Hello! [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-How [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-can [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-I [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-assist [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-you [INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-[INFO] into DeepseekV2MLP
-today?
+Chat: [INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 103.27190399169922s
-prompt eval rate:     0.038732703139873474 tokens/s
+prompt eval duration: 312.0043697357178s
+prompt eval rate:     0.012820333264525065 tokens/s
 eval count:           10 token(s)
-eval duration:        179.28670263290405s
-eval rate:            0.0557765849510622 tokens/s
+eval duration:        896.5813517570496s
+eval rate:            0.011153477573900892 tokens/s
 Chat: 
