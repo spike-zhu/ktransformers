@@ -42,7 +42,7 @@ def rotate_half(x):
     x2 = x[..., x.shape[-1] // 2 :]
     return torch.cat((-x2, x1), dim=-1)
 
-#  InfiniCore GEMM init 
+# InfiniCore GEMM init 
 import ctypes
 from ctypes import POINTER, Structure, c_int32, c_size_t, c_uint64, c_void_p, c_float
 import sys
@@ -52,15 +52,8 @@ from libinfiniop import (
     infiniopTensorDescriptor_t,
     open_lib,
     to_tensor,
-    get_test_devices,
     check_error,
-    rearrange_if_needed,
-    create_workspace,
-    test_operator,
-    get_args,
-    debug,
-    get_tolerance,
-    profile_operation,            
+    create_workspace,    
     InfiniDeviceEnum,
     infiniDeviceEnum_str_map,
 )
@@ -107,6 +100,41 @@ lib.infiniopDestroyGemmDescriptor.restype = c_int32
 lib.infiniopDestroyGemmDescriptor.argtypes = [
     infiniopGemmDescriptor_t,
 ]
+
+# InfiniCore causal_softmax init 
+class CausalSoftmaxDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+
+infiniopCausalSoftmaxDescriptor_t = POINTER(CausalSoftmaxDescriptor)
+
+lib.infiniopCreateCausalSoftmaxDescriptor.restype = c_int32
+lib.infiniopCreateCausalSoftmaxDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopCausalSoftmaxDescriptor_t),
+    infiniopTensorDescriptor_t,
+]
+
+lib.infiniopGetCausalSoftmaxWorkspaceSize.restype = c_int32
+lib.infiniopGetCausalSoftmaxWorkspaceSize.argtypes = [
+    infiniopCausalSoftmaxDescriptor_t,
+    POINTER(c_uint64),
+]
+
+lib.infiniopCausalSoftmax.restype = c_int32
+lib.infiniopCausalSoftmax.argtypes = [
+    infiniopCausalSoftmaxDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+]
+
+lib.infiniopDestroyCausalSoftmaxDescriptor.restype = c_int32
+lib.infiniopDestroyCausalSoftmaxDescriptor.argtypes = [
+    infiniopCausalSoftmaxDescriptor_t,
+]
+
+
 
 
 # V3 MLA is same to V2
@@ -519,14 +547,59 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             print("[INFO] attn_scores-Dtype:", attn_scores.dtype)
             print("[INFO] attn_scores-Device:", attn_scores.device)
 
-            # Step 2: Causal mask: only allow looking backward
-            # Mask shape: [Q, K]
-            Q, K = attn_scores.size(-2), attn_scores.size(-1)
-            causal_mask = torch.tril(torch.ones(Q, K, device=attn_scores.device, dtype=torch.bool))
-            attn_scores = attn_scores.masked_fill(~causal_mask, float('-inf'))
 
-            # Step 3: Softmax
-            attn_probs = F.softmax(attn_scores, dim=-1)
+            # # Step 2-3: Causal mask: only allow looking backward
+            # # Mask shape: [Q, K]
+            # Q, K = attn_scores.size(-2), attn_scores.size(-1)
+            # causal_mask = torch.tril(torch.ones(Q, K, device=attn_scores.device, dtype=torch.bool))
+            # attn_scores = attn_scores.masked_fill(~causal_mask, float('-inf'))
+            # attn_probs = F.softmax(attn_scores, dim=-1)
+
+            # partially replace flash_attn_func with infinicore causal_softmax
+            attn_scores_input_infinicore_fp32 = attn_scores.to(torch.float32)
+
+            if attn_scores_input_infinicore_fp32.ndim == 4:
+                attn_scores_input_infinicore_fp32 = attn_scores_input_infinicore_fp32.squeeze(0)
+            attn_scores_output_infinicore_fp32 = torch.ones_like(attn_scores_input_infinicore_fp32)
+
+            x_tensor, y_tensor = [to_tensor(tensor, lib) for tensor in [attn_scores_input_infinicore_fp32, attn_scores_output_infinicore_fp32]]
+            
+            descriptor_causal_softmax = infiniopCausalSoftmaxDescriptor_t()
+            check_error(
+                lib.infiniopCreateCausalSoftmaxDescriptor(
+                    handle, ctypes.byref(descriptor_causal_softmax), y_tensor.descriptor, x_tensor.descriptor
+                )
+            )
+
+            # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+            x_tensor.destroyDesc(lib)
+
+            workspace_size_causal_softmax = c_uint64(0)
+            check_error(
+                lib.infiniopGetCausalSoftmaxWorkspaceSize(
+                    descriptor_causal_softmax, ctypes.byref(workspace_size_causal_softmax)
+                )
+            )
+
+            workspace_causal_softmax = create_workspace(workspace_size_causal_softmax.value, attn_scores_input_infinicore_fp32.device)
+
+            def lib_causal_softmax():
+                check_error(
+                    lib.infiniopCausalSoftmax(
+                        descriptor_causal_softmax,
+                        workspace_causal_softmax.data_ptr() if workspace_causal_softmax is not None else None,
+                        workspace_size_causal_softmax.value,
+                        y_tensor.data,
+                        x_tensor.data,
+                        None,
+                    )
+                )
+
+            lib_causal_softmax()
+            check_error(lib.infiniopDestroyCausalSoftmaxDescriptor(descriptor_causal_softmax))
+
+            attn_scores_output_infinicore_fp32 = attn_scores_output_infinicore_fp32.unsqueeze(0)
+            attn_probs = attn_scores_output_infinicore_fp32.to(dtype = input_dtype, device = input_device)
 
             # # Step 4: Compute attention output → [B, H, Q, D]
             # attn_output = torch.matmul(attn_probs, value)

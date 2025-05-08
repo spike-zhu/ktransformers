@@ -2294,9 +2294,245 @@ q_len: 4
 [INFO] attn_scores-Device: cuda:0
 Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 312.0043697357178s
-prompt eval rate:     0.012820333264525065 tokens/s
+prompt eval duration: 35.758230447769165s
+prompt eval rate:     0.11186235867691116 tokens/s
 eval count:           10 token(s)
-eval duration:        896.5813517570496s
-eval rate:            0.011153477573900892 tokens/s
-Chat: 
+eval duration:        88.81866431236267s
+eval rate:            0.11258894825114027 tokens/s
+Chat: [INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype: torch.bfloat16
+[INFO] attn_scores-Device: cuda:0
+[INFO] into forward_linux_triton q_len != 1
+kv_seq_len: 4
+q_len: 4
+[INFO] attn_scores-Type: <class 'torch.Tensor'>
+[INFO] attn_scores-Shape: torch.Size([1, 128, 4, 4])
+[INFO] attn_scores-Dtype:
