@@ -432,19 +432,14 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             #     causal=True,
             # )
 
-            import torch.nn.functional as F
+            # # # replace attention with torch.matmul and softmax
 
-            # [B, Q, H, D] → [B, H, Q, D]
-            query = query_states.permute(0, 2, 1, 3)
-            key = key_states.permute(0, 2, 1, 3)
-            key = key.transpose(-2, -1)
-            value = value_states_padded.permute(0, 2, 1, 3)
-
-            # scale
-            scale = self.softmax_scale
-            if scale is None:
-                scale = 1.0 / (query.shape[-1] ** 0.5)  # 1/sqrt(D)
-
+            # # [B, Q, H, D] → [B, H, Q, D]
+            # query = query_states.permute(0, 2, 1, 3)
+            # key = key_states.permute(0, 2, 1, 3)
+            # key = key.transpose(-2, -1)
+            # value = value_states_padded.permute(0, 2, 1, 3)
+            
             # # Step 1: Attention score → [B, H, Q, K]
             # attn_scores = torch.matmul(query, key.transpose(-2, -1)) * scale
 
@@ -471,6 +466,21 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             # ).contiguous()
             # attn_output = self.o_proj(attn_output)
             # return attn_output, None, past_key_value
+
+
+            print("[INFO] replace KDeepseekV2Attention with InfiniCore GEMM and Causal_softmax")
+            import torch.nn.functional as F
+
+            # [B, Q, H, D] → [B, H, Q, D]
+            query = query_states.permute(0, 2, 1, 3)
+            key = key_states.permute(0, 2, 1, 3)
+            key = key.transpose(-2, -1)
+            value = value_states_padded.permute(0, 2, 1, 3)
+
+            # scale
+            scale = self.softmax_scale
+            if scale is None:
+                scale = 1.0 / (query.shape[-1] ** 0.5)  # 1/sqrt(D)
 
             input_dtype = query.dtype
             input_device = query.device
@@ -540,22 +550,14 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             infinicore_gemm_output_fp32 = infinicore_gemm_output_fp32.unsqueeze(0)
             attn_scores = (infinicore_gemm_output_fp32 * scale).to(dtype = input_dtype, device = input_device)
 
-            print("kv_seq_len:", kv_seq_len)
-            print("q_len:", q_len)
-            print("[INFO] attn_scores-Type:", type(attn_scores))
-            print("[INFO] attn_scores-Shape:", attn_scores.shape)
-            print("[INFO] attn_scores-Dtype:", attn_scores.dtype)
-            print("[INFO] attn_scores-Device:", attn_scores.device)
+            # print("kv_seq_len:", kv_seq_len)
+            # print("q_len:", q_len)
+            # print("[INFO] attn_scores-Type:", type(attn_scores))
+            # print("[INFO] attn_scores-Shape:", attn_scores.shape)
+            # print("[INFO] attn_scores-Dtype:", attn_scores.dtype)
+            # print("[INFO] attn_scores-Device:", attn_scores.device)
 
-
-            # # Step 2-3: Causal mask: only allow looking backward
-            # # Mask shape: [Q, K]
-            # Q, K = attn_scores.size(-2), attn_scores.size(-1)
-            # causal_mask = torch.tril(torch.ones(Q, K, device=attn_scores.device, dtype=torch.bool))
-            # attn_scores = attn_scores.masked_fill(~causal_mask, float('-inf'))
-            # attn_probs = F.softmax(attn_scores, dim=-1)
-
-            # partially replace flash_attn_func with infinicore causal_softmax
+            # # partially replace flash_attn_func with infinicore causal_softmax
             attn_scores_input_infinicore_fp32 = attn_scores.to(torch.float32)
 
             if attn_scores_input_infinicore_fp32.ndim == 4:

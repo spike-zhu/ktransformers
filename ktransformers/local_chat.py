@@ -60,7 +60,6 @@ def local_chat(
     max_new_tokens: int = 1000,
     cpu_infer: int = Config().cpu_infer,
     use_cuda_graph: bool = False,
-    use_cuda_graph: bool = False,
     prompt_file : str | None = None,
     mode: str = "normal",
     force_think: bool = False,
@@ -94,12 +93,6 @@ def local_chat(
             model = custom_models[config.architectures[0]](config)
             print(type(config))
             print(config)
-            import time
-            time.sleep(30)
-            print(type(config))
-            print(config)
-            import time
-            time.sleep(30)
         else:
             model = AutoModelForCausalLM.from_config(
                 config, trust_remote_code=True, attn_implementation="flash_attention_2"
@@ -119,16 +112,8 @@ def local_chat(
             "please input the path of your gguf file(gguf file in the dir containing input gguf file must all belong to current model):"
         )
         
-    import time
     print("[INFO-test] into optimize_and_load_gguf ...")
-    time.sleep(5)
-        
-    import time
-    print("[INFO-test] into optimize_and_load_gguf ...")
-
     optimize_and_load_gguf(model, optimize_config_path, gguf_path, config)
-    print("[INFO-test] end optimize_and_load_gguf ...")
-    time.sleep(10)
     print("[INFO-test] end optimize_and_load_gguf ...")
 
     

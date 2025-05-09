@@ -206,7 +206,7 @@ class KLinearTorch(KLinearBase):
         self.has_bias = False
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        print("[INFO] into KLinearTorch forward ---")
+        print("[INFO] replace KLinearTorch with InfiniCore GEMM")
 
         device = InfiniDeviceEnum.NVIDIA
 
