@@ -82,7 +82,6 @@ Injecting model.layers.0.mlp as default
 Injecting model.layers.0.mlp.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.0.mlp.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.0.mlp.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.0.mlp.act_fn as default
 Injecting model.layers.0.input_layernorm as default
 Injecting model.layers.0.post_attention_layernorm as default
 Injecting model.layers.1 as default
@@ -102,7 +101,6 @@ Injecting model.layers.1.mlp.shared_experts as default
 Injecting model.layers.1.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.1.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.1.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.1.mlp.shared_experts.act_fn as default
 Injecting model.layers.1.input_layernorm as default
 Injecting model.layers.1.post_attention_layernorm as default
 Injecting model.layers.2 as default
@@ -122,7 +120,6 @@ Injecting model.layers.2.mlp.shared_experts as default
 Injecting model.layers.2.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.2.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.2.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.2.mlp.shared_experts.act_fn as default
 Injecting model.layers.2.input_layernorm as default
 Injecting model.layers.2.post_attention_layernorm as default
 Injecting model.layers.3 as default
@@ -142,7 +139,6 @@ Injecting model.layers.3.mlp.shared_experts as default
 Injecting model.layers.3.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.3.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.3.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.3.mlp.shared_experts.act_fn as default
 Injecting model.layers.3.input_layernorm as default
 Injecting model.layers.3.post_attention_layernorm as default
 Injecting model.layers.4 as default
@@ -162,7 +158,6 @@ Injecting model.layers.4.mlp.shared_experts as default
 Injecting model.layers.4.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.4.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.4.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.4.mlp.shared_experts.act_fn as default
 Injecting model.layers.4.input_layernorm as default
 Injecting model.layers.4.post_attention_layernorm as default
 Injecting model.layers.5 as default
@@ -182,7 +177,6 @@ Injecting model.layers.5.mlp.shared_experts as default
 Injecting model.layers.5.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.5.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.5.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.5.mlp.shared_experts.act_fn as default
 Injecting model.layers.5.input_layernorm as default
 Injecting model.layers.5.post_attention_layernorm as default
 Injecting model.layers.6 as default
@@ -202,7 +196,6 @@ Injecting model.layers.6.mlp.shared_experts as default
 Injecting model.layers.6.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.6.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.6.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.6.mlp.shared_experts.act_fn as default
 Injecting model.layers.6.input_layernorm as default
 Injecting model.layers.6.post_attention_layernorm as default
 Injecting model.layers.7 as default
@@ -222,7 +215,6 @@ Injecting model.layers.7.mlp.shared_experts as default
 Injecting model.layers.7.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.7.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.7.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.7.mlp.shared_experts.act_fn as default
 Injecting model.layers.7.input_layernorm as default
 Injecting model.layers.7.post_attention_layernorm as default
 Injecting model.layers.8 as default
@@ -242,7 +234,6 @@ Injecting model.layers.8.mlp.shared_experts as default
 Injecting model.layers.8.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.8.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.8.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.8.mlp.shared_experts.act_fn as default
 Injecting model.layers.8.input_layernorm as default
 Injecting model.layers.8.post_attention_layernorm as default
 Injecting model.layers.9 as default
@@ -262,7 +253,6 @@ Injecting model.layers.9.mlp.shared_experts as default
 Injecting model.layers.9.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.9.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.9.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.9.mlp.shared_experts.act_fn as default
 Injecting model.layers.9.input_layernorm as default
 Injecting model.layers.9.post_attention_layernorm as default
 Injecting model.layers.10 as default
@@ -282,7 +272,6 @@ Injecting model.layers.10.mlp.shared_experts as default
 Injecting model.layers.10.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.10.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.10.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.10.mlp.shared_experts.act_fn as default
 Injecting model.layers.10.input_layernorm as default
 Injecting model.layers.10.post_attention_layernorm as default
 Injecting model.layers.11 as default
@@ -302,7 +291,6 @@ Injecting model.layers.11.mlp.shared_experts as default
 Injecting model.layers.11.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.11.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.11.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.11.mlp.shared_experts.act_fn as default
 Injecting model.layers.11.input_layernorm as default
 Injecting model.layers.11.post_attention_layernorm as default
 Injecting model.layers.12 as default
@@ -322,7 +310,6 @@ Injecting model.layers.12.mlp.shared_experts as default
 Injecting model.layers.12.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.12.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.12.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.12.mlp.shared_experts.act_fn as default
 Injecting model.layers.12.input_layernorm as default
 Injecting model.layers.12.post_attention_layernorm as default
 Injecting model.layers.13 as default
@@ -342,7 +329,6 @@ Injecting model.layers.13.mlp.shared_experts as default
 Injecting model.layers.13.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.13.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.13.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.13.mlp.shared_experts.act_fn as default
 Injecting model.layers.13.input_layernorm as default
 Injecting model.layers.13.post_attention_layernorm as default
 Injecting model.layers.14 as default
@@ -362,7 +348,6 @@ Injecting model.layers.14.mlp.shared_experts as default
 Injecting model.layers.14.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.14.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.14.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.14.mlp.shared_experts.act_fn as default
 Injecting model.layers.14.input_layernorm as default
 Injecting model.layers.14.post_attention_layernorm as default
 Injecting model.layers.15 as default
@@ -382,7 +367,6 @@ Injecting model.layers.15.mlp.shared_experts as default
 Injecting model.layers.15.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.15.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.15.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.15.mlp.shared_experts.act_fn as default
 Injecting model.layers.15.input_layernorm as default
 Injecting model.layers.15.post_attention_layernorm as default
 Injecting model.layers.16 as default
@@ -402,7 +386,6 @@ Injecting model.layers.16.mlp.shared_experts as default
 Injecting model.layers.16.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.16.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.16.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.16.mlp.shared_experts.act_fn as default
 Injecting model.layers.16.input_layernorm as default
 Injecting model.layers.16.post_attention_layernorm as default
 Injecting model.layers.17 as default
@@ -422,7 +405,6 @@ Injecting model.layers.17.mlp.shared_experts as default
 Injecting model.layers.17.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.17.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.17.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.17.mlp.shared_experts.act_fn as default
 Injecting model.layers.17.input_layernorm as default
 Injecting model.layers.17.post_attention_layernorm as default
 Injecting model.layers.18 as default
@@ -442,7 +424,6 @@ Injecting model.layers.18.mlp.shared_experts as default
 Injecting model.layers.18.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.18.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.18.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.18.mlp.shared_experts.act_fn as default
 Injecting model.layers.18.input_layernorm as default
 Injecting model.layers.18.post_attention_layernorm as default
 Injecting model.layers.19 as default
@@ -462,7 +443,6 @@ Injecting model.layers.19.mlp.shared_experts as default
 Injecting model.layers.19.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.19.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.19.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.19.mlp.shared_experts.act_fn as default
 Injecting model.layers.19.input_layernorm as default
 Injecting model.layers.19.post_attention_layernorm as default
 Injecting model.layers.20 as default
@@ -482,7 +462,6 @@ Injecting model.layers.20.mlp.shared_experts as default
 Injecting model.layers.20.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.20.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.20.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.20.mlp.shared_experts.act_fn as default
 Injecting model.layers.20.input_layernorm as default
 Injecting model.layers.20.post_attention_layernorm as default
 Injecting model.layers.21 as default
@@ -502,7 +481,6 @@ Injecting model.layers.21.mlp.shared_experts as default
 Injecting model.layers.21.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.21.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.21.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.21.mlp.shared_experts.act_fn as default
 Injecting model.layers.21.input_layernorm as default
 Injecting model.layers.21.post_attention_layernorm as default
 Injecting model.layers.22 as default
@@ -522,7 +500,6 @@ Injecting model.layers.22.mlp.shared_experts as default
 Injecting model.layers.22.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.22.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.22.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.22.mlp.shared_experts.act_fn as default
 Injecting model.layers.22.input_layernorm as default
 Injecting model.layers.22.post_attention_layernorm as default
 Injecting model.layers.23 as default
@@ -542,7 +519,6 @@ Injecting model.layers.23.mlp.shared_experts as default
 Injecting model.layers.23.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.23.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.23.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.23.mlp.shared_experts.act_fn as default
 Injecting model.layers.23.input_layernorm as default
 Injecting model.layers.23.post_attention_layernorm as default
 Injecting model.layers.24 as default
@@ -562,7 +538,6 @@ Injecting model.layers.24.mlp.shared_experts as default
 Injecting model.layers.24.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.24.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.24.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.24.mlp.shared_experts.act_fn as default
 Injecting model.layers.24.input_layernorm as default
 Injecting model.layers.24.post_attention_layernorm as default
 Injecting model.layers.25 as default
@@ -582,7 +557,6 @@ Injecting model.layers.25.mlp.shared_experts as default
 Injecting model.layers.25.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.25.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.25.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.25.mlp.shared_experts.act_fn as default
 Injecting model.layers.25.input_layernorm as default
 Injecting model.layers.25.post_attention_layernorm as default
 Injecting model.layers.26 as default
@@ -602,7 +576,6 @@ Injecting model.layers.26.mlp.shared_experts as default
 Injecting model.layers.26.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.26.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.26.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.26.mlp.shared_experts.act_fn as default
 Injecting model.layers.26.input_layernorm as default
 Injecting model.layers.26.post_attention_layernorm as default
 Injecting model.layers.27 as default
@@ -622,7 +595,6 @@ Injecting model.layers.27.mlp.shared_experts as default
 Injecting model.layers.27.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.27.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.27.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.27.mlp.shared_experts.act_fn as default
 Injecting model.layers.27.input_layernorm as default
 Injecting model.layers.27.post_attention_layernorm as default
 Injecting model.layers.28 as default
@@ -642,7 +614,6 @@ Injecting model.layers.28.mlp.shared_experts as default
 Injecting model.layers.28.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.28.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.28.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.28.mlp.shared_experts.act_fn as default
 Injecting model.layers.28.input_layernorm as default
 Injecting model.layers.28.post_attention_layernorm as default
 Injecting model.layers.29 as default
@@ -662,7 +633,6 @@ Injecting model.layers.29.mlp.shared_experts as default
 Injecting model.layers.29.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.29.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.29.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.29.mlp.shared_experts.act_fn as default
 Injecting model.layers.29.input_layernorm as default
 Injecting model.layers.29.post_attention_layernorm as default
 Injecting model.layers.30 as default
@@ -682,7 +652,6 @@ Injecting model.layers.30.mlp.shared_experts as default
 Injecting model.layers.30.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.30.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.30.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.30.mlp.shared_experts.act_fn as default
 Injecting model.layers.30.input_layernorm as default
 Injecting model.layers.30.post_attention_layernorm as default
 Injecting model.layers.31 as default
@@ -702,7 +671,6 @@ Injecting model.layers.31.mlp.shared_experts as default
 Injecting model.layers.31.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.31.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.31.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.31.mlp.shared_experts.act_fn as default
 Injecting model.layers.31.input_layernorm as default
 Injecting model.layers.31.post_attention_layernorm as default
 Injecting model.layers.32 as default
@@ -722,7 +690,6 @@ Injecting model.layers.32.mlp.shared_experts as default
 Injecting model.layers.32.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.32.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.32.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.32.mlp.shared_experts.act_fn as default
 Injecting model.layers.32.input_layernorm as default
 Injecting model.layers.32.post_attention_layernorm as default
 Injecting model.layers.33 as default
@@ -742,7 +709,6 @@ Injecting model.layers.33.mlp.shared_experts as default
 Injecting model.layers.33.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.33.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.33.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.33.mlp.shared_experts.act_fn as default
 Injecting model.layers.33.input_layernorm as default
 Injecting model.layers.33.post_attention_layernorm as default
 Injecting model.layers.34 as default
@@ -762,7 +728,6 @@ Injecting model.layers.34.mlp.shared_experts as default
 Injecting model.layers.34.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.34.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.34.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.34.mlp.shared_experts.act_fn as default
 Injecting model.layers.34.input_layernorm as default
 Injecting model.layers.34.post_attention_layernorm as default
 Injecting model.layers.35 as default
@@ -782,7 +747,6 @@ Injecting model.layers.35.mlp.shared_experts as default
 Injecting model.layers.35.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.35.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.35.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.35.mlp.shared_experts.act_fn as default
 Injecting model.layers.35.input_layernorm as default
 Injecting model.layers.35.post_attention_layernorm as default
 Injecting model.layers.36 as default
@@ -802,7 +766,6 @@ Injecting model.layers.36.mlp.shared_experts as default
 Injecting model.layers.36.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.36.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.36.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.36.mlp.shared_experts.act_fn as default
 Injecting model.layers.36.input_layernorm as default
 Injecting model.layers.36.post_attention_layernorm as default
 Injecting model.layers.37 as default
@@ -822,7 +785,6 @@ Injecting model.layers.37.mlp.shared_experts as default
 Injecting model.layers.37.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.37.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.37.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.37.mlp.shared_experts.act_fn as default
 Injecting model.layers.37.input_layernorm as default
 Injecting model.layers.37.post_attention_layernorm as default
 Injecting model.layers.38 as default
@@ -842,7 +804,6 @@ Injecting model.layers.38.mlp.shared_experts as default
 Injecting model.layers.38.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.38.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.38.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.38.mlp.shared_experts.act_fn as default
 Injecting model.layers.38.input_layernorm as default
 Injecting model.layers.38.post_attention_layernorm as default
 Injecting model.layers.39 as default
@@ -862,7 +823,6 @@ Injecting model.layers.39.mlp.shared_experts as default
 Injecting model.layers.39.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.39.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.39.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.39.mlp.shared_experts.act_fn as default
 Injecting model.layers.39.input_layernorm as default
 Injecting model.layers.39.post_attention_layernorm as default
 Injecting model.layers.40 as default
@@ -882,7 +842,6 @@ Injecting model.layers.40.mlp.shared_experts as default
 Injecting model.layers.40.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.40.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.40.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.40.mlp.shared_experts.act_fn as default
 Injecting model.layers.40.input_layernorm as default
 Injecting model.layers.40.post_attention_layernorm as default
 Injecting model.layers.41 as default
@@ -902,7 +861,6 @@ Injecting model.layers.41.mlp.shared_experts as default
 Injecting model.layers.41.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.41.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.41.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.41.mlp.shared_experts.act_fn as default
 Injecting model.layers.41.input_layernorm as default
 Injecting model.layers.41.post_attention_layernorm as default
 Injecting model.layers.42 as default
@@ -922,7 +880,6 @@ Injecting model.layers.42.mlp.shared_experts as default
 Injecting model.layers.42.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.42.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.42.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.42.mlp.shared_experts.act_fn as default
 Injecting model.layers.42.input_layernorm as default
 Injecting model.layers.42.post_attention_layernorm as default
 Injecting model.layers.43 as default
@@ -942,7 +899,6 @@ Injecting model.layers.43.mlp.shared_experts as default
 Injecting model.layers.43.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.43.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.43.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.43.mlp.shared_experts.act_fn as default
 Injecting model.layers.43.input_layernorm as default
 Injecting model.layers.43.post_attention_layernorm as default
 Injecting model.layers.44 as default
@@ -962,7 +918,6 @@ Injecting model.layers.44.mlp.shared_experts as default
 Injecting model.layers.44.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.44.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.44.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.44.mlp.shared_experts.act_fn as default
 Injecting model.layers.44.input_layernorm as default
 Injecting model.layers.44.post_attention_layernorm as default
 Injecting model.layers.45 as default
@@ -982,7 +937,6 @@ Injecting model.layers.45.mlp.shared_experts as default
 Injecting model.layers.45.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.45.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.45.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.45.mlp.shared_experts.act_fn as default
 Injecting model.layers.45.input_layernorm as default
 Injecting model.layers.45.post_attention_layernorm as default
 Injecting model.layers.46 as default
@@ -1002,7 +956,6 @@ Injecting model.layers.46.mlp.shared_experts as default
 Injecting model.layers.46.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.46.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.46.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.46.mlp.shared_experts.act_fn as default
 Injecting model.layers.46.input_layernorm as default
 Injecting model.layers.46.post_attention_layernorm as default
 Injecting model.layers.47 as default
@@ -1022,7 +975,6 @@ Injecting model.layers.47.mlp.shared_experts as default
 Injecting model.layers.47.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.47.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.47.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.47.mlp.shared_experts.act_fn as default
 Injecting model.layers.47.input_layernorm as default
 Injecting model.layers.47.post_attention_layernorm as default
 Injecting model.layers.48 as default
@@ -1042,7 +994,6 @@ Injecting model.layers.48.mlp.shared_experts as default
 Injecting model.layers.48.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.48.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.48.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.48.mlp.shared_experts.act_fn as default
 Injecting model.layers.48.input_layernorm as default
 Injecting model.layers.48.post_attention_layernorm as default
 Injecting model.layers.49 as default
@@ -1062,7 +1013,6 @@ Injecting model.layers.49.mlp.shared_experts as default
 Injecting model.layers.49.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.49.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.49.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.49.mlp.shared_experts.act_fn as default
 Injecting model.layers.49.input_layernorm as default
 Injecting model.layers.49.post_attention_layernorm as default
 Injecting model.layers.50 as default
@@ -1082,7 +1032,6 @@ Injecting model.layers.50.mlp.shared_experts as default
 Injecting model.layers.50.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.50.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.50.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.50.mlp.shared_experts.act_fn as default
 Injecting model.layers.50.input_layernorm as default
 Injecting model.layers.50.post_attention_layernorm as default
 Injecting model.layers.51 as default
@@ -1102,7 +1051,6 @@ Injecting model.layers.51.mlp.shared_experts as default
 Injecting model.layers.51.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.51.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.51.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.51.mlp.shared_experts.act_fn as default
 Injecting model.layers.51.input_layernorm as default
 Injecting model.layers.51.post_attention_layernorm as default
 Injecting model.layers.52 as default
@@ -1122,7 +1070,6 @@ Injecting model.layers.52.mlp.shared_experts as default
 Injecting model.layers.52.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.52.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.52.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.52.mlp.shared_experts.act_fn as default
 Injecting model.layers.52.input_layernorm as default
 Injecting model.layers.52.post_attention_layernorm as default
 Injecting model.layers.53 as default
@@ -1142,7 +1089,6 @@ Injecting model.layers.53.mlp.shared_experts as default
 Injecting model.layers.53.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.53.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.53.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.53.mlp.shared_experts.act_fn as default
 Injecting model.layers.53.input_layernorm as default
 Injecting model.layers.53.post_attention_layernorm as default
 Injecting model.layers.54 as default
@@ -1162,7 +1108,6 @@ Injecting model.layers.54.mlp.shared_experts as default
 Injecting model.layers.54.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.54.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.54.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.54.mlp.shared_experts.act_fn as default
 Injecting model.layers.54.input_layernorm as default
 Injecting model.layers.54.post_attention_layernorm as default
 Injecting model.layers.55 as default
@@ -1182,7 +1127,6 @@ Injecting model.layers.55.mlp.shared_experts as default
 Injecting model.layers.55.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.55.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.55.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.55.mlp.shared_experts.act_fn as default
 Injecting model.layers.55.input_layernorm as default
 Injecting model.layers.55.post_attention_layernorm as default
 Injecting model.layers.56 as default
@@ -1202,7 +1146,6 @@ Injecting model.layers.56.mlp.shared_experts as default
 Injecting model.layers.56.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.56.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.56.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.56.mlp.shared_experts.act_fn as default
 Injecting model.layers.56.input_layernorm as default
 Injecting model.layers.56.post_attention_layernorm as default
 Injecting model.layers.57 as default
@@ -1222,7 +1165,6 @@ Injecting model.layers.57.mlp.shared_experts as default
 Injecting model.layers.57.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.57.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.57.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.57.mlp.shared_experts.act_fn as default
 Injecting model.layers.57.input_layernorm as default
 Injecting model.layers.57.post_attention_layernorm as default
 Injecting model.layers.58 as default
@@ -1242,7 +1184,6 @@ Injecting model.layers.58.mlp.shared_experts as default
 Injecting model.layers.58.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.58.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.58.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.58.mlp.shared_experts.act_fn as default
 Injecting model.layers.58.input_layernorm as default
 Injecting model.layers.58.post_attention_layernorm as default
 Injecting model.layers.59 as default
@@ -1262,7 +1203,6 @@ Injecting model.layers.59.mlp.shared_experts as default
 Injecting model.layers.59.mlp.shared_experts.gate_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.59.mlp.shared_experts.up_proj as ktransformers.operators.linear . KTransformersLinear
 Injecting model.layers.59.mlp.shared_experts.down_proj as ktransformers.operators.linear . KTransformersLinear
-Injecting model.layers.59.mlp.shared_experts.act_fn as default
 Injecting model.layers.59.input_layernorm as default
 Injecting model.layers.59.post_attention_layernorm as default
 Injecting model.norm as default
@@ -1457,7 +1397,7 @@ loading blk.30.ffn_norm.weight to cuda:0
 loading blk.31.attn_q_a_norm.weight to cuda:0
 loading blk.31.attn_kv_a_norm.weight to cuda:0
 loading blk.31.attn_kv_b.weight to cuda:0
-loading blk.31.ffn_gate_inp.weight to cuda:0[H[2J[3J
+loading blk.31.ffn_gate_inp.weight to cuda:0
 loading blk.31.attn_norm.weight to cuda:0
 loading blk.31.ffn_norm.weight to cuda:0
 loading blk.32.attn_q_a_norm.weight to cuda:0
@@ -1538,7 +1478,7 @@ loading blk.44.attn_kv_b.weight to cuda:0
 loading blk.44.ffn_gate_inp.weight to cuda:0
 loading blk.44.attn_norm.weight to cuda:0
 loading blk.44.ffn_norm.weight to cuda:0
-loading blk.45.attn_q_a_norm.weight to cuda:0
+loading blk.45.attn_q_a_norm.weight to cuda:0[H[2J[3J
 loading blk.45.attn_kv_a_norm.weight to cuda:0
 loading blk.45.attn_kv_b.weight to cuda:0
 loading blk.45.ffn_gate_inp.weight to cuda:0
@@ -1632,30 +1572,44 @@ loading output_norm.weight to cuda:0
 [INFO-test] end optimize_and_load_gguf ...
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 16.966591119766235s
-prompt eval rate:     0.2357574348178853 tokens/s
+prompt eval duration: 54.88899636268616s
+prompt eval rate:     0.07287435123734969 tokens/s
 eval count:           10 token(s)
-eval duration:        23.344825983047485s
-eval rate:            0.42836044300616277 tokens/s
+eval duration:        89.57909321784973s
+eval rate:            0.11163319074553188 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 7.80362606048584s
-prompt eval rate:     0.5125822238272354 tokens/s
+prompt eval duration: 6.79626727104187s
+prompt eval rate:     0.5885583718938703 tokens/s
 eval count:           10 token(s)
-eval duration:        20.459796667099s
-eval rate:            0.48876341063940315 tokens/s
+eval duration:        19.174405097961426s
+eval rate:            0.5215285662793875 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 8.489660501480103s
-prompt eval rate:     0.4711613614351991 tokens/s
+prompt eval duration: 10.345420598983765s
+prompt eval rate:     0.3866445024374284 tokens/s
 eval count:           10 token(s)
-eval duration:        21.153796911239624s
-eval rate:            0.472728373159653 tokens/s
+eval duration:        21.060036182403564s
+eval rate:            0.4748329923742186 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 7.855728387832642s
-prompt eval rate:     0.5091825738521468 tokens/s
+prompt eval duration: 8.146922826766968s
+prompt eval rate:     0.49098292509386193 tokens/s
 eval count:           10 token(s)
-eval duration:        21.307562112808228s
-eval rate:            0.4693169470565045 tokens/s
+eval duration:        21.1229305267334s
+eval rate:            0.4734191587357586 tokens/s
+Chat: Hello! How can I assist you today?
+prompt eval count:    4 token(s)
+prompt eval duration: 9.233357191085815s
+prompt eval rate:     0.43321187702580494 tokens/s
+eval count:           10 token(s)
+eval duration:        20.771198272705078s
+eval rate:            0.48143587426733847 tokens/s
+Chat: I am an intelligent assistant, DeepSeek Chat, developed by the Chinese company DeepSeek.
+prompt eval count:    7 token(s)
+prompt eval duration: 29.98586654663086s
+prompt eval rate:     0.23344331200548557 tokens/s
+eval count:           19 token(s)
+eval duration:        114.65621542930603s
+eval rate:            0.16571277822888628 tokens/s
 Chat: 
