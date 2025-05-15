@@ -1572,44 +1572,30 @@ loading output_norm.weight to cuda:0
 [INFO-test] end optimize_and_load_gguf ...
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 54.88899636268616s
-prompt eval rate:     0.07287435123734969 tokens/s
+prompt eval duration: 12.710281372070312s
+prompt eval rate:     0.31470585763660874 tokens/s
 eval count:           10 token(s)
-eval duration:        89.57909321784973s
-eval rate:            0.11163319074553188 tokens/s
+eval duration:        25.13568353652954s
+eval rate:            0.39784078222766683 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 6.79626727104187s
-prompt eval rate:     0.5885583718938703 tokens/s
+prompt eval duration: 12.785499095916748s
+prompt eval rate:     0.3128544275035351 tokens/s
 eval count:           10 token(s)
-eval duration:        19.174405097961426s
-eval rate:            0.5215285662793875 tokens/s
+eval duration:        21.695318937301636s
+eval rate:            0.4609289233728017 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 10.345420598983765s
-prompt eval rate:     0.3866445024374284 tokens/s
+prompt eval duration: 14.313994646072388s
+prompt eval rate:     0.27944680006552597 tokens/s
 eval count:           10 token(s)
-eval duration:        21.060036182403564s
-eval rate:            0.4748329923742186 tokens/s
-Chat: Hello! How can I assist you today?
-prompt eval count:    4 token(s)
-prompt eval duration: 8.146922826766968s
-prompt eval rate:     0.49098292509386193 tokens/s
-eval count:           10 token(s)
-eval duration:        21.1229305267334s
-eval rate:            0.4734191587357586 tokens/s
-Chat: Hello! How can I assist you today?
-prompt eval count:    4 token(s)
-prompt eval duration: 9.233357191085815s
-prompt eval rate:     0.43321187702580494 tokens/s
-eval count:           10 token(s)
-eval duration:        20.771198272705078s
-eval rate:            0.48143587426733847 tokens/s
-Chat: I am an intelligent assistant, DeepSeek Chat, developed by the Chinese company DeepSeek.
-prompt eval count:    7 token(s)
-prompt eval duration: 29.98586654663086s
-prompt eval rate:     0.23344331200548557 tokens/s
-eval count:           19 token(s)
-eval duration:        114.65621542930603s
-eval rate:            0.16571277822888628 tokens/s
+eval duration:        22.11194610595703s
+eval rate:            0.4522442281688615 tokens/s
+Chat: I am an AI assistant created by DeepSeek to be helpful and harmless.
+prompt eval count:    6 token(s)
+prompt eval duration: 21.80962347984314s
+prompt eval rate:     0.2751079130524794 tokens/s
+eval count:           16 token(s)
+eval duration:        36.84033727645874s
+eval rate:            0.4343065558800984 tokens/s
 Chat: 

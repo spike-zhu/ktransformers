@@ -42,6 +42,105 @@ def rotate_half(x):
     x2 = x[..., x.shape[-1] // 2 :]
     return torch.cat((-x2, x1), dim=-1)
 
+# initial InfiniCore Op GEMM and Causal_Softmax 
+import ctypes
+from ctypes import POINTER, Structure, c_int32, c_size_t, c_uint64, c_void_p, c_float
+import sys
+sys.path.append("/home/wanghaojie/zhushuang/InfiniCore/test/infiniop")
+from libinfiniop import (
+    infiniopHandle_t,
+    infiniopTensorDescriptor_t,
+    open_lib,
+    to_tensor,
+    check_error,
+    create_workspace,    
+    InfiniDeviceEnum,
+    infiniDeviceEnum_str_map,
+)
+
+device = InfiniDeviceEnum.NVIDIA
+torch_device = infiniDeviceEnum_str_map[device]
+
+class GemmDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+
+infiniopGemmDescriptor_t = POINTER(GemmDescriptor)
+
+lib = open_lib()
+
+lib.infiniopCreateGemmDescriptor.restype = c_int32
+lib.infiniopCreateGemmDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopGemmDescriptor_t),
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+]
+
+lib.infiniopGetGemmWorkspaceSize.restype = c_int32
+lib.infiniopGetGemmWorkspaceSize.argtypes = [
+    infiniopGemmDescriptor_t,
+    POINTER(c_size_t),
+]
+
+lib.infiniopGemm.restype = c_int32
+lib.infiniopGemm.argtypes = [
+    infiniopGemmDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+    c_float,
+    c_float,
+    c_void_p,
+]
+
+lib.infiniopDestroyGemmDescriptor.restype = c_int32
+lib.infiniopDestroyGemmDescriptor.argtypes = [
+    infiniopGemmDescriptor_t,
+]
+
+# InfiniCore causal_softmax init 
+class CausalSoftmaxDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+
+infiniopCausalSoftmaxDescriptor_t = POINTER(CausalSoftmaxDescriptor)
+
+lib.infiniopCreateCausalSoftmaxDescriptor.restype = c_int32
+lib.infiniopCreateCausalSoftmaxDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopCausalSoftmaxDescriptor_t),
+    infiniopTensorDescriptor_t,
+]
+
+lib.infiniopGetCausalSoftmaxWorkspaceSize.restype = c_int32
+lib.infiniopGetCausalSoftmaxWorkspaceSize.argtypes = [
+    infiniopCausalSoftmaxDescriptor_t,
+    POINTER(c_uint64),
+]
+
+lib.infiniopCausalSoftmax.restype = c_int32
+lib.infiniopCausalSoftmax.argtypes = [
+    infiniopCausalSoftmaxDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+]
+
+lib.infiniopDestroyCausalSoftmaxDescriptor.restype = c_int32
+lib.infiniopDestroyCausalSoftmaxDescriptor.argtypes = [
+    infiniopCausalSoftmaxDescriptor_t,
+]
+
+
+def create_handle(lib):
+    handle = infiniopHandle_t()
+    check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
+    return handle
+
+
 # V3 MLA is same to V2
 class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
@@ -327,13 +426,227 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             value_states = value_states.view(bsz, kv_seq_len, self.num_heads, self.v_head_dim)
             value_states_padded = torch.nn.functional.pad(value_states, [0, query_states.shape[-1] - value_states.shape[-1]], value=0)
 
-            attn_output = flash_attn_func(
-                query_states,
-                key_states,
-                value_states_padded,
-                softmax_scale=self.softmax_scale,
-                causal=True,
+            # attn_output = flash_attn_func(
+            #     query_states,
+            #     key_states,
+            #     value_states_padded,
+            #     softmax_scale=self.softmax_scale,
+            #     causal=True,
+            # )
+
+            # if self.q_head_dim != self.v_head_dim:
+            #     attn_output = attn_output[:, :, :, : self.v_head_dim]
+
+            # attn_output = attn_output.reshape(
+            #     bsz, q_len, self.num_heads * self.v_head_dim
+            # ).contiguous()
+            # attn_output = self.o_proj(attn_output)
+            # return attn_output, None, past_key_value
+
+
+            # # replace flash_attn_func with torch.matmul and softmax
+            # # Step 1: Attention score → [B, H, Q, K]
+            # attn_scores = torch.matmul(query, key.transpose(-2, -1)) * scale
+
+            # # Step 2: Causal mask: only allow looking backward
+            # # Mask shape: [Q, K]
+            # Q, K = attn_scores.size(-2), attn_scores.size(-1)
+            # causal_mask = torch.tril(torch.ones(Q, K, device=attn_scores.device, dtype=torch.bool))
+            # attn_scores = attn_scores.masked_fill(~causal_mask, float('-inf'))
+
+            # # Step 3: Softmax
+            # attn_probs = F.softmax(attn_scores, dim=-1)
+
+            # # Step 4: Compute attention output → [B, H, Q, D]
+            # attn_output = torch.matmul(attn_probs, value)
+
+            # # Step 5: Permute back to [B, Q, H, D]
+            # attn_output = attn_output.permute(0, 2, 1, 3)
+
+            # if self.q_head_dim != self.v_head_dim:
+            #     attn_output = attn_output[:, :, :, : self.v_head_dim]
+
+            # attn_output = attn_output.reshape(
+            #     bsz, q_len, self.num_heads * self.v_head_dim
+            # ).contiguous()
+            # attn_output = self.o_proj(attn_output)
+            # return attn_output, None, past_key_value
+
+
+            # replace flash_attn_func with InfiniCore GEMM and Causal_Softmax
+            # [B, Q, H, D] → [B, H, Q, D]
+            input_dtype = query_states.dtype
+            input_device = query_states.device
+
+            query_input_infinicore_fp32 = query_states.permute(0, 2, 1, 3).to(torch.float32)
+            key_input_inifnicore_fp32 = key_states.permute(0, 2, 1, 3).transpose(-2, -1).to(torch.float32)
+
+            value = value_states_padded.permute(0, 2, 1, 3).to(torch.float32)
+
+            if query_input_infinicore_fp32.ndim == 4:
+                query_input_infinicore_fp32 = query_input_infinicore_fp32.squeeze(0)
+            if key_input_inifnicore_fp32.ndim == 4:
+                key_input_inifnicore_fp32 = key_input_inifnicore_fp32.squeeze(0)
+            infinicore_gemm_output_fp32 = torch.ones((query_input_infinicore_fp32.shape[0],query_input_infinicore_fp32.shape[1],key_input_inifnicore_fp32.shape[2]),
+                                                     dtype = torch.float32, device = input_device)
+            
+            a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [query_input_infinicore_fp32, key_input_inifnicore_fp32, infinicore_gemm_output_fp32]]
+
+            descriptor = infiniopGemmDescriptor_t()
+
+            lib.infinirtSetDevice(device, ctypes.c_int(0))
+            handle = create_handle(lib)
+
+            check_error(
+                lib.infiniopCreateGemmDescriptor(
+                    handle,
+                    ctypes.byref(descriptor),
+                    c_tensor.descriptor,
+                    a_tensor.descriptor,
+                    b_tensor.descriptor,
+                )
             )
+
+            # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+            for tensor in [a_tensor, b_tensor, c_tensor]:
+                tensor.destroyDesc(lib)
+
+            # Get workspace size and create workspace
+            workspace_size = c_uint64(0)
+            check_error(
+                lib.infiniopGetGemmWorkspaceSize(descriptor, ctypes.byref(workspace_size))
+            )
+            workspace = create_workspace(workspace_size.value, query_input_infinicore_fp32.device)
+
+            alpha = 1.0
+            beta = 0.0
+            # Execute infiniop gemm operator
+            def lib_gemm():
+                check_error(
+                    lib.infiniopGemm(
+                        descriptor,
+                        workspace.data_ptr() if workspace is not None else None,
+                        workspace_size.value,
+                        c_tensor.data,
+                        a_tensor.data,
+                        b_tensor.data,
+                        alpha,
+                        beta,
+                        None,
+                    )
+                )
+
+            lib_gemm()
+            check_error(lib.infiniopDestroyGemmDescriptor(descriptor))
+
+            # scale
+            scale = self.softmax_scale
+            if scale is None:
+                scale = 1.0 / (query_input_infinicore_fp32.shape[-1] ** 0.5)  # 1/sqrt(D)
+
+            attn_scores = infinicore_gemm_output_fp32 * scale
+
+
+            # infinicore causal_softmax
+            attn_scores_output_infinicore_fp32 = torch.ones_like(attn_scores)
+
+            x_tensor, y_tensor = [to_tensor(tensor, lib) for tensor in [attn_scores, attn_scores_output_infinicore_fp32]]
+
+            descriptor_causal_softmax = infiniopCausalSoftmaxDescriptor_t()
+            check_error(
+                lib.infiniopCreateCausalSoftmaxDescriptor(
+                    handle, ctypes.byref(descriptor_causal_softmax), y_tensor.descriptor, x_tensor.descriptor
+                )
+            )
+
+            # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+            for tensor in [x_tensor, y_tensor]:
+                tensor.destroyDesc(lib)
+
+            workspace_size_causal_softmax = c_uint64(0)
+            check_error(
+                lib.infiniopGetCausalSoftmaxWorkspaceSize(
+                    descriptor_causal_softmax, ctypes.byref(workspace_size_causal_softmax)
+                )
+            )
+            workspace_causal_softmax = create_workspace(workspace_size_causal_softmax.value, attn_scores.device)
+
+            def lib_causal_softmax():
+                check_error(
+                    lib.infiniopCausalSoftmax(
+                        descriptor_causal_softmax,
+                        workspace_causal_softmax.data_ptr() if workspace_causal_softmax is not None else None,
+                        workspace_size_causal_softmax.value,
+                        y_tensor.data,
+                        x_tensor.data,
+                        None,
+                    )
+                )
+
+            lib_causal_softmax()
+            check_error(lib.infiniopDestroyCausalSoftmaxDescriptor(descriptor_causal_softmax))
+
+            attn_probs = attn_scores_output_infinicore_fp32
+
+            # attention scores * value
+            value_input_inifnicore_fp32 = value.to(torch.float32)
+            if value_input_inifnicore_fp32.ndim == 4:
+                value_input_inifnicore_fp32 = value_input_inifnicore_fp32.squeeze(0)
+
+            infinicore_gemm_output2_fp32 = torch.ones((attn_probs.shape[0],attn_probs.shape[1],value_input_inifnicore_fp32.shape[2]),
+                                                     dtype = torch.float32, device = input_device)
+            a_tensor2, b_tensor2, c_tensor2 = [to_tensor(tensor, lib) for tensor in [attn_probs, value_input_inifnicore_fp32, infinicore_gemm_output2_fp32]]
+
+            descriptor2 = infiniopGemmDescriptor_t()
+
+            check_error(
+                lib.infiniopCreateGemmDescriptor(
+                    handle,
+                    ctypes.byref(descriptor2),
+                    c_tensor2.descriptor,
+                    a_tensor2.descriptor,
+                    b_tensor2.descriptor,
+                )
+            )
+
+            # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+            for tensor in [a_tensor2, b_tensor2, c_tensor2]:
+                tensor.destroyDesc(lib)
+
+            # Get workspace size and create workspace
+            workspace_size2 = c_uint64(0)
+            check_error(
+                lib.infiniopGetGemmWorkspaceSize(descriptor2, ctypes.byref(workspace_size2))
+            )
+            workspace2 = create_workspace(workspace_size2.value, attn_probs.device)
+
+            alpha = 1.0
+            beta = 0.0
+            # Execute infiniop gemm operator
+            def lib_gemm2():
+                check_error(
+                    lib.infiniopGemm(
+                        descriptor2,
+                        workspace2.data_ptr() if workspace2 is not None else None,
+                        workspace_size2.value,
+                        c_tensor2.data,
+                        a_tensor2.data,
+                        b_tensor2.data,
+                        alpha,
+                        beta,
+                        None,
+                    )
+                )
+
+            lib_gemm2()
+            check_error(lib.infiniopDestroyGemmDescriptor(descriptor2))
+
+            infinicore_gemm_output2_fp32 = infinicore_gemm_output2_fp32.unsqueeze(0)
+            attn_output = (infinicore_gemm_output2_fp32).to(dtype = input_dtype, device = input_device)    
+
+            # Permute back to [B, Q, H, D]
+            attn_output = attn_output.permute(0, 2, 1, 3)
+
 
             if self.q_head_dim != self.v_head_dim:
                 attn_output = attn_output[:, :, :, : self.v_head_dim]
@@ -343,6 +656,7 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             ).contiguous()
             attn_output = self.o_proj(attn_output)
             return attn_output, None, past_key_value
+
 
     def forward_linux_flashinfer(
             self,
