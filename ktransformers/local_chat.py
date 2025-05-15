@@ -93,8 +93,7 @@ def local_chat(
             model = custom_models[config.architectures[0]](config)
             print(type(config))
             print(config)
-            import time
-            time.sleep(30)
+
         else:
             model = AutoModelForCausalLM.from_config(
                 config, trust_remote_code=True, attn_implementation="flash_attention_2"

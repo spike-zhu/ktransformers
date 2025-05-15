@@ -1632,23 +1632,30 @@ loading output_norm.weight to cuda:0
 [INFO-test] end optimize_and_load_gguf ...
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 39.55699038505554s
-prompt eval rate:     0.10111992750366526 tokens/s
+prompt eval duration: 16.966591119766235s
+prompt eval rate:     0.2357574348178853 tokens/s
 eval count:           10 token(s)
-eval duration:        84.20791292190552s
-eval rate:            0.11875368540809232 tokens/s
+eval duration:        23.344825983047485s
+eval rate:            0.42836044300616277 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 25.732638835906982s
-prompt eval rate:     0.15544460968450904 tokens/s
+prompt eval duration: 7.80362606048584s
+prompt eval rate:     0.5125822238272354 tokens/s
 eval count:           10 token(s)
-eval duration:        79.48814916610718s
-eval rate:            0.1258049168952582 tokens/s
+eval duration:        20.459796667099s
+eval rate:            0.48876341063940315 tokens/s
 Chat: Hello! How can I assist you today?
 prompt eval count:    4 token(s)
-prompt eval duration: 26.559658527374268s
-prompt eval rate:     0.15060434590592783 tokens/s
+prompt eval duration: 8.489660501480103s
+prompt eval rate:     0.4711613614351991 tokens/s
 eval count:           10 token(s)
-eval duration:        84.04361748695374s
-eval rate:            0.11898583496304548 tokens/s
+eval duration:        21.153796911239624s
+eval rate:            0.472728373159653 tokens/s
+Chat: Hello! How can I assist you today?
+prompt eval count:    4 token(s)
+prompt eval duration: 7.855728387832642s
+prompt eval rate:     0.5091825738521468 tokens/s
+eval count:           10 token(s)
+eval duration:        21.307562112808228s
+eval rate:            0.4693169470565045 tokens/s
 Chat: 

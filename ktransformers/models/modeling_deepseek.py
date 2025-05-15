@@ -185,37 +185,34 @@ class DeepseekV2RMSNorm(nn.Module):
         self.variance_epsilon = eps
         self.save_path = save_path
 
+
+        self.device = InfiniDeviceEnum.NVIDIA
+        self.handle = create_handle(lib)
+        self.descriptor = infiniopRMSNormDescriptor_t()
+        self.workspace_size = c_uint64(0)
+
+        lib.infinirtSetDevice(self.device, ctypes.c_int(0))
+
+
     def forward(self, hidden_states):
-        
-        device = InfiniDeviceEnum.NVIDIA
-        torch_device = infiniDeviceEnum_str_map[device]
 
         input_dtype = hidden_states.dtype
-        input_device = hidden_states.device
 
         # the data to record
         self.weight_float32 = self.weight.to(torch.float32)
 
-        hidden_states_clone = hidden_states
-        if hidden_states_clone.ndim == 3:
-            hidden_states_clone = hidden_states_clone.squeeze(0)
+        if hidden_states.ndim == 3:
+            hidden_states = hidden_states.squeeze(0)
 
-        hidden_states_clone = hidden_states_clone.to(torch.float32)
-        y = torch.zeros_like(hidden_states_clone)
-        self.weight = nn.Parameter(self.weight_float32)
+        hidden_states = hidden_states.to(torch.float32)
+        y = torch.zeros_like(hidden_states)
 
-
-        x_tensor, y_tensor, w_tensor = [to_tensor(tensor, lib) for tensor in [hidden_states_clone, y, self.weight]]
-
-        descriptor = infiniopRMSNormDescriptor_t()
-
-        lib.infinirtSetDevice(device, ctypes.c_int(0))
-        handle = create_handle(lib)
+        x_tensor, y_tensor, w_tensor = [to_tensor(tensor, lib) for tensor in [hidden_states, y, self.weight_float32]]
 
         check_error(
             lib.infiniopCreateRMSNormDescriptor(
-                handle,
-                ctypes.byref(descriptor),
+                self.handle,
+                ctypes.byref(self.descriptor),
                 y_tensor.descriptor,
                 x_tensor.descriptor,
                 w_tensor.descriptor,
@@ -227,19 +224,18 @@ class DeepseekV2RMSNorm(nn.Module):
         for tensor in [x_tensor, y_tensor, w_tensor]:
             tensor.destroyDesc(lib)
 
-        workspace_size = c_uint64(0)
         check_error(
-            lib.infiniopGetRMSNormWorkspaceSize(descriptor, ctypes.byref(workspace_size))
+            lib.infiniopGetRMSNormWorkspaceSize(self.descriptor, ctypes.byref(self.workspace_size))
         )
 
-        workspace = create_workspace(workspace_size.value, y.device)
+        workspace = create_workspace(self.workspace_size.value, y.device)
 
         def lib_rms_norm():
             check_error(
                 lib.infiniopRMSNorm(
-                    descriptor,
+                    self.descriptor,
                     workspace.data_ptr() if workspace is not None else None,
-                    workspace_size.value,
+                    self.workspace_size.value,
                     y_tensor.data,
                     x_tensor.data,
                     w_tensor.data,
@@ -248,17 +244,9 @@ class DeepseekV2RMSNorm(nn.Module):
             )
 
         lib_rms_norm()
-        check_error(lib.infiniopDestroyRMSNormDescriptor(descriptor))
+        check_error(lib.infiniopDestroyRMSNormDescriptor(self.descriptor))
         y = y.unsqueeze(0)
 
-        # temp = nn.Parameter(torch.ones(y.shape[-1])).to(y.device)
-        # ans_float32 = (temp  * y).to(torch.float32)
-
-        # # Save data to file
-        # if self.save_path is not None:
-        #     self.save_data(hidden_states_input_float32.cpu(), self.weight_float32.cpu(), ans_float32.cpu())
-
-        # return (temp * y).to(input_dtype)
         return y.to(input_dtype)
 
 
