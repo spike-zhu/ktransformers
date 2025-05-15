@@ -115,7 +115,65 @@ def _get_unpad_data(attention_mask):
 #         hidden_states = hidden_states * torch.rsqrt(variance + self.variance_epsilon)
 #         return (self.weight * hidden_states).to(input_dtype)
 
-global_epoch = 0
+import ctypes
+import torch
+
+from ctypes import POINTER, Structure, c_int32, c_uint64, c_void_p, c_float
+import sys
+sys.path.append("/home/wanghaojie/zhushuang/InfiniCore/test/infiniop")
+
+from libinfiniop import (
+    infiniopHandle_t,
+    infiniopTensorDescriptor_t,
+    open_lib,
+    to_tensor,
+    check_error,
+    create_workspace,
+    InfiniDeviceEnum,
+    infiniDeviceEnum_str_map,
+)
+
+class RMSNormDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+infiniopRMSNormDescriptor_t = POINTER(RMSNormDescriptor)
+
+lib = open_lib() 
+lib.infiniopCreateRMSNormDescriptor.restype = c_int32
+lib.infiniopCreateRMSNormDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopRMSNormDescriptor_t),
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    c_float,
+]
+
+lib.infiniopGetRMSNormWorkspaceSize.restype = c_int32
+lib.infiniopGetRMSNormWorkspaceSize.argtypes = [
+    infiniopRMSNormDescriptor_t,
+    POINTER(c_uint64),
+]
+
+lib.infiniopRMSNorm.restype = c_int32
+lib.infiniopRMSNorm.argtypes = [
+    infiniopRMSNormDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+]
+
+lib.infiniopDestroyRMSNormDescriptor.restype = c_int32
+lib.infiniopDestroyRMSNormDescriptor.argtypes = [
+    infiniopRMSNormDescriptor_t,
+]
+
+def create_handle(lib):
+    handle = infiniopHandle_t()
+    check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
+    return handle
 
 class DeepseekV2RMSNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-6, save_path = None):
@@ -125,101 +183,31 @@ class DeepseekV2RMSNorm(nn.Module):
         super().__init__()
         self.weight = nn.Parameter(torch.ones(hidden_size))
         self.variance_epsilon = eps
-        # self.log_file = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/infer_ans-test_{global_epoch}.npz"
         self.save_path = save_path
 
     def forward(self, hidden_states):
-
-        import ctypes
-        import torch
-    
-        from ctypes import POINTER, Structure, c_int32, c_uint64, c_void_p, c_float
-        import sys
-        sys.path.append("/home/wanghaojie/zhushuang/InfiniCore/test/infiniop")
-
-        from libinfiniop import (
-            infiniopHandle_t,
-            infiniopTensorDescriptor_t,
-            open_lib,
-            to_tensor,
-            get_test_devices,
-            check_error,
-            rearrange_if_needed,
-            create_workspace,
-            test_operator,
-            get_args,
-            debug,
-            get_tolerance,
-            profile_operation,
-            InfiniDeviceEnum,
-            infiniDeviceEnum_str_map,
-        )
         
         device = InfiniDeviceEnum.NVIDIA
         torch_device = infiniDeviceEnum_str_map[device]
 
-        hidden_states_clone = hidden_states.clone()
-        hidden_states_clone = hidden_states_clone.to(torch.float32)
+        input_dtype = hidden_states.dtype
+        input_device = hidden_states.device
 
         # the data to record
         self.weight_float32 = self.weight.to(torch.float32)
-        hidden_states_input_float32 = hidden_states_clone.clone()
 
+        hidden_states_clone = hidden_states
         if hidden_states_clone.ndim == 3:
             hidden_states_clone = hidden_states_clone.squeeze(0)
 
+        hidden_states_clone = hidden_states_clone.to(torch.float32)
+        y = torch.zeros_like(hidden_states_clone)
+        self.weight = nn.Parameter(self.weight_float32)
 
-        class RMSNormDescriptor(Structure):
-            _fields_ = [("device", c_int32)]
-        infiniopRMSNormDescriptor_t = POINTER(RMSNormDescriptor)
-
-        lib = open_lib() 
-        lib.infiniopCreateRMSNormDescriptor.restype = c_int32
-        lib.infiniopCreateRMSNormDescriptor.argtypes = [
-            infiniopHandle_t,
-            POINTER(infiniopRMSNormDescriptor_t),
-            infiniopTensorDescriptor_t,
-            infiniopTensorDescriptor_t,
-            infiniopTensorDescriptor_t,
-            c_float,
-        ]
-
-        lib.infiniopGetRMSNormWorkspaceSize.restype = c_int32
-        lib.infiniopGetRMSNormWorkspaceSize.argtypes = [
-            infiniopRMSNormDescriptor_t,
-            POINTER(c_uint64),
-        ]
-
-        lib.infiniopRMSNorm.restype = c_int32
-        lib.infiniopRMSNorm.argtypes = [
-            infiniopRMSNormDescriptor_t,
-            c_void_p,
-            c_uint64,
-            c_void_p,
-            c_void_p,
-            c_void_p,
-            c_void_p,
-        ]
-
-        lib.infiniopDestroyRMSNormDescriptor.restype = c_int32
-        lib.infiniopDestroyRMSNormDescriptor.argtypes = [
-            infiniopRMSNormDescriptor_t,
-        ]
-
-        input_dtype = hidden_states.dtype
-        self.weight = nn.Parameter(self.weight.to(torch.float32).to(torch_device))
-        y = torch.zeros_like(hidden_states_clone, dtype = torch.float32).to(torch_device)
-        hidden_states_clone = hidden_states_clone.to(torch.float32).to(torch_device)
 
         x_tensor, y_tensor, w_tensor = [to_tensor(tensor, lib) for tensor in [hidden_states_clone, y, self.weight]]
 
         descriptor = infiniopRMSNormDescriptor_t()
-
-        def create_handle(lib):
-            handle = infiniopHandle_t()
-            check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
-            return handle
-
 
         lib.infinirtSetDevice(device, ctypes.c_int(0))
         handle = create_handle(lib)
@@ -261,19 +249,17 @@ class DeepseekV2RMSNorm(nn.Module):
 
         lib_rms_norm()
         check_error(lib.infiniopDestroyRMSNormDescriptor(descriptor))
-        y = y.unsqueeze(0).to(input_dtype)
+        y = y.unsqueeze(0)
 
-        # hidden_states.copy_(y)
-
-        temp = nn.Parameter(torch.ones(y.shape[-1])).to(y.device)
-
-        ans_float32 = (temp * y).to(torch.float32)
+        # temp = nn.Parameter(torch.ones(y.shape[-1])).to(y.device)
+        # ans_float32 = (temp  * y).to(torch.float32)
 
         # # Save data to file
         # if self.save_path is not None:
         #     self.save_data(hidden_states_input_float32.cpu(), self.weight_float32.cpu(), ans_float32.cpu())
-        
-        return (temp * y).to(input_dtype)
+
+        # return (temp * y).to(input_dtype)
+        return y.to(input_dtype)
 
 
     def save_data(self, hidden_states, weight, ans):
@@ -1390,26 +1376,15 @@ class DeepseekV2DecoderLayer(nn.Module):
             )
             else DeepseekV2MLP(config)
         )
-        # 声明 global_epoch 是全局变量
-        global global_epoch
-        print("[INFO] into DeepseekV2DecoderLayer-input_layernorm")
-        print("[INFO] global_epoch:", global_epoch)
-        self.log_path = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/z_data-test/infer_ans_{global_epoch}.npz"
+
 
         self.input_layernorm = DeepseekV2RMSNorm(
-            config.hidden_size, eps=config.rms_norm_eps, save_path = self.log_path
+            config.hidden_size, eps=config.rms_norm_eps
         )
-        global_epoch = global_epoch + 1
 
-        print("[INFO] into DeepseekV2DecoderLayer-post_attention_layernorm")
-        print("[INFO] global_epoch:", global_epoch)
-        self.log_path = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/z_data-test/infer_ans_{global_epoch}.npz"
- 
         self.post_attention_layernorm = DeepseekV2RMSNorm(
-            config.hidden_size, eps=config.rms_norm_eps, save_path = self.log_path
+            config.hidden_size, eps=config.rms_norm_eps
         )
-
-        global_epoch = global_epoch + 1
 
     def forward(
         self,
@@ -1617,14 +1592,7 @@ class DeepseekV2Model(DeepseekV2PreTrainedModel):
         )
         self._use_flash_attention_2 = config._attn_implementation == "flash_attention_2"
 
-        # 声明 global_epoch 是全局变量
-        global global_epoch
-        print("[INFO] into DeepseekV2Model-norm")
-        print("[INFO] global_epoch:", global_epoch)
-
-        self.log_path = f"/home/wanghaojie/zhushuang/ktransformer-test/ktransformers/z_data-test/infer_ans_{global_epoch}.npz"
-        self.norm = DeepseekV2RMSNorm(config.hidden_size, eps=config.rms_norm_eps, save_path = self.log_path)
-        global_epoch = global_epoch + 1
+        self.norm = DeepseekV2RMSNorm(config.hidden_size, eps=config.rms_norm_eps)
         
         self.gradient_checkpointing = False
         # Initialize weights and apply final processing
