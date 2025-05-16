@@ -118,6 +118,72 @@ class KLinearBase(ABC):
         pass
 
 
+# initial InfiniCore Op gemm
+import ctypes
+from ctypes import POINTER, Structure, c_int32, c_size_t, c_uint64, c_void_p, c_float
+import sys
+sys.path.append("/home/wanghaojie/zhushuang/InfiniCore/test/infiniop")
+from libinfiniop import (
+    infiniopHandle_t,
+    infiniopTensorDescriptor_t,
+    open_lib,
+    to_tensor,
+    check_error,
+    create_workspace,
+    InfiniDeviceEnum,
+    infiniDeviceEnum_str_map,
+)
+
+device = InfiniDeviceEnum.NVIDIA
+torch_device = infiniDeviceEnum_str_map[device]
+
+class GemmDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+
+infiniopGemmDescriptor_t = POINTER(GemmDescriptor)
+
+lib = open_lib()
+
+lib.infiniopCreateGemmDescriptor.restype = c_int32
+lib.infiniopCreateGemmDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopGemmDescriptor_t),
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+]
+
+lib.infiniopGetGemmWorkspaceSize.restype = c_int32
+lib.infiniopGetGemmWorkspaceSize.argtypes = [
+    infiniopGemmDescriptor_t,
+    POINTER(c_size_t),
+]
+
+lib.infiniopGemm.restype = c_int32
+lib.infiniopGemm.argtypes = [
+    infiniopGemmDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+    c_float,
+    c_float,
+    c_void_p,
+]
+
+lib.infiniopDestroyGemmDescriptor.restype = c_int32
+lib.infiniopDestroyGemmDescriptor.argtypes = [
+    infiniopGemmDescriptor_t,
+]
+
+def create_handle(lib):
+    handle = infiniopHandle_t()
+    check_error(lib.infiniopCreateHandle(ctypes.byref(handle)))
+    return handle
+
+lib.infinirtSetDevice(device, ctypes.c_int(0))
+
 class KLinearTorch(KLinearBase):
     def __init__(
         self,
@@ -133,6 +199,10 @@ class KLinearTorch(KLinearBase):
         self.dtype = torch.get_default_dtype()
         self.weight = None
         self.has_bias = False
+        self.handle = create_handle(lib)
+        self.descriptor = infiniopGemmDescriptor_t()
+        # Get workspace size and create workspace
+        self.workspace_size = c_uint64(0)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         dtype = x.dtype
@@ -143,6 +213,77 @@ class KLinearTorch(KLinearBase):
         if self.has_bias:
             x = x + self.bias
         x = x.to(dtype=dtype, device=out_device)
+        return x
+    
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        print("[debug] into klineartorch")
+        input_dtype = x.dtype
+        input_device = x.device
+
+        infinicore_gemm_input_a_fp32 = x.to(torch.float32)
+        infinicore_gemm_input_b_fp32 = self.weight.to(torch.float32)
+        out_features = self.weight.shape[1]
+        if x.ndim == 2:
+            batch_size, seq_len = x.shape
+        else:
+            batch_size, seq_len, _ = x.shape
+
+        infinicore_gemm_input_c_fp32 = torch.ones((batch_size, seq_len, out_features), device = input_device, dtype = torch.float32)
+        a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [infinicore_gemm_input_a_fp32, infinicore_gemm_input_b_fp32, infinicore_gemm_input_c_fp32]]
+
+        check_error(
+            lib.infiniopCreateGemmDescriptor(
+                self.handle,
+                ctypes.byref(self.descriptor),
+                c_tensor.descriptor,
+                a_tensor.descriptor,
+                b_tensor.descriptor,
+            )
+        )
+        
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [a_tensor, b_tensor, c_tensor]:
+            tensor.destroyDesc(lib)
+
+        check_error(
+            lib.infiniopGetGemmWorkspaceSize(self.descriptor, ctypes.byref(self.workspace_size))
+        )
+        workspace = create_workspace(self.workspace_size.value, infinicore_gemm_input_a_fp32.device)
+
+        alpha = 1.0
+        beta = 0.0
+        # Execute infiniop gemm operator
+        def lib_gemm():
+            check_error(
+                lib.infiniopGemm(
+                    self.descriptor,
+                    workspace.data_ptr() if workspace is not None else None,
+                    self.workspace_size.value,
+                    c_tensor.data,
+                    a_tensor.data,
+                    b_tensor.data,
+                    alpha,
+                    beta,
+                    None,
+                )
+            )
+
+        lib_gemm()
+        check_error(lib.infiniopDestroyGemmDescriptor(self.descriptor))
+
+        if self.has_bias:
+            infinicore_gemm_input_c_fp32 = infinicore_gemm_input_c_fp32 + self.bias
+
+        x = infinicore_gemm_input_c_fp32.to(dtype=input_dtype, device=input_device)
+
+        # dtype = x.dtype
+        # out_device = x.device
+        # # TODO: support CUDA Graph when using cpu, but CPUInfer is recommended.
+        # x = x.to(device=self.device, dtype=self.dtype)
+        # x = x @ self.weight
+        # if self.has_bias:
+        #     x = x + self.bias
+        # x = x.to(dtype=dtype, device=out_device)
         return x
 
     def load(self, w: dict | nn.Parameter | tuple | None = None, device: str|None = None):
@@ -398,7 +539,7 @@ class KLinearFP8(KLinearBase):
         if self.has_bias:
             self.bias = None
         
-        
+
 class KLinearMarlin(KLinearBase):
     marlin_q_w: torch.Tensor
     marlin_s: torch.Tensor
@@ -485,6 +626,7 @@ class KLinearMarlin(KLinearBase):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # Only support input x as BF16 and FP16
+        print("[debug] into klinear marlin")
         x = x.to(self.device)
         orig_shape = list(x.shape)
         orig_dtype = x.dtype
@@ -652,6 +794,8 @@ class KTransformersLinear(BaseInjectedModule, KLinearBase):
         prefill_op: str| None = "KLinearTorch",
         **kwargs,
     ):
+        print(f"[info] generate_op:{generate_op}")
+        print(f"[info] prefill_op:{prefill_op}")
         BaseInjectedModule.__init__(self, key, gguf_loader, config, orig_module, prefill_device, generate_device, **kwargs)
         KLinearBase.__init__(self, key, gguf_loader, config, orig_module, generate_device, **kwargs)
         # build all the linear operators
