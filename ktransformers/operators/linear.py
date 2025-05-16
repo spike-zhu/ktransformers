@@ -204,19 +204,18 @@ class KLinearTorch(KLinearBase):
         # Get workspace size and create workspace
         self.workspace_size = c_uint64(0)
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        dtype = x.dtype
-        out_device = x.device
-        # TODO: support CUDA Graph when using cpu, but CPUInfer is recommended.
-        x = x.to(device=self.device, dtype=self.dtype)
-        x = x @ self.weight
-        if self.has_bias:
-            x = x + self.bias
-        x = x.to(dtype=dtype, device=out_device)
-        return x
+    # def forward(self, x: torch.Tensor) -> torch.Tensor:
+    #     dtype = x.dtype
+    #     out_device = x.device
+    #     # TODO: support CUDA Graph when using cpu, but CPUInfer is recommended.
+    #     x = x.to(device=self.device, dtype=self.dtype)
+    #     x = x @ self.weight
+    #     if self.has_bias:
+    #         x = x + self.bias
+    #     x = x.to(dtype=dtype, device=out_device)
+    #     return x
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        print("[debug] into klineartorch")
         input_dtype = x.dtype
         input_device = x.device
 
@@ -626,7 +625,6 @@ class KLinearMarlin(KLinearBase):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # Only support input x as BF16 and FP16
-        print("[debug] into klinear marlin")
         x = x.to(self.device)
         orig_shape = list(x.shape)
         orig_dtype = x.dtype
@@ -794,8 +792,6 @@ class KTransformersLinear(BaseInjectedModule, KLinearBase):
         prefill_op: str| None = "KLinearTorch",
         **kwargs,
     ):
-        print(f"[info] generate_op:{generate_op}")
-        print(f"[info] prefill_op:{prefill_op}")
         BaseInjectedModule.__init__(self, key, gguf_loader, config, orig_module, prefill_device, generate_device, **kwargs)
         KLinearBase.__init__(self, key, gguf_loader, config, orig_module, generate_device, **kwargs)
         # build all the linear operators
