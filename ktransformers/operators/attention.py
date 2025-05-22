@@ -234,18 +234,232 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
         # q_pe [bsz, self.num_heads, q_len, self.qk_rope_head_dim]
         k_pe = k_pe.view(bsz, 1, -1, self.qk_rope_head_dim)[:,:,:attention_mask.size(-1),:]
         compressed_kv = compressed_kv.view(bsz, 1, -1, self.kv_lora_rank)[:,:,:attention_mask.size(-1),:]
-        # k_pe [bsz, 1, cache_len, self.qk_rope_head_dim]
-        # compressed_kv [bsz, 1, cache_len,self.kv_lora_rank]
-        q_nope = torch.matmul(q_nope, q_absorb)
-        #print(q_pe.shape)
-        #print(k_pe.shape)
-        #print(q_nope.shape)
-        #print(compressed_kv.shape)
+        # # k_pe [bsz, 1, cache_len, self.qk_rope_head_dim]
+        # # compressed_kv [bsz, 1, cache_len,self.kv_lora_rank]
+        # q_nope = torch.matmul(q_nope, q_absorb)
+        # #print(q_pe.shape)
+        # #print(k_pe.shape)
+        # #print(q_nope.shape)
+        # #print(compressed_kv.shape)
         
-        attn_weights = (torch.matmul(q_pe, k_pe.mT) + torch.matmul(q_nope, compressed_kv.mT)) * self.softmax_scale
+        # attn_weights = (torch.matmul(q_pe, k_pe.mT) + torch.matmul(q_nope, compressed_kv.mT)) * self.softmax_scale
         
+        # q_nope = torch.matmul(q_nope, q_absorb)
+        input_dtype = q_nope.dtype
+        input_device = q_nope.device
+
+        q_nope_was_squeezed = False
+        q_absorb_was_squeezed =False
+        if q_nope.ndim == 4:
+            q_nope = q_nope.squeeze(0)
+            q_nope_was_squeezed = True
+        if q_absorb.ndim == 4:
+            q_absorb = q_absorb.squeeze(0)
+            q_absorb_was_squeezed = True
+        q_nope_input_fp32 = q_nope.to(torch.float32)
+        q_absorb_input_fp32 = q_absorb.to(torch.float32)
+        gemm_q_nope_q_absorb = torch.ones((q_nope_input_fp32.shape[0], q_nope_input_fp32.shape[1], q_absorb_input_fp32.shape[2]), dtype=torch.float32, device=input_device)
+
+        # print("000")
+        # print(q_nope_input_fp32.shape)
+        # print(q_absorb_input_fp32.shape)
+        # print(gemm_q_nope_q_absorb.shape)
+
+        a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [q_nope_input_fp32, q_absorb_input_fp32, gemm_q_nope_q_absorb]]
+
+        lib.infinirtSetDevice(device, ctypes.c_int(0))
+
+        descriptor = infiniopGemmDescriptor_t()
+        handle = create_handle(lib)
+
+        check_error(
+            lib.infiniopCreateGemmDescriptor(
+                handle,
+                ctypes.byref(descriptor),
+                c_tensor.descriptor,
+                a_tensor.descriptor,
+                b_tensor.descriptor,
+            )
+        )
+
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [a_tensor, b_tensor, c_tensor]:
+            tensor.destroyDesc(lib)
+
+
+        # Get workspace size and create workspace
+        workspace_size = c_uint64(0)
+        check_error(
+            lib.infiniopGetGemmWorkspaceSize(descriptor, ctypes.byref(workspace_size))
+        )
+        workspace = create_workspace(workspace_size.value, q_nope_input_fp32.device)
+
+        alpha = 1.0
+        beta = 0.0
+        # Execute infiniop gemm operator
+        def lib_gemm():
+            check_error(
+                lib.infiniopGemm(
+                    descriptor,
+                    workspace.data_ptr() if workspace is not None else None,
+                    workspace_size.value,
+                    c_tensor.data,
+                    a_tensor.data,
+                    b_tensor.data,
+                    alpha,
+                    beta,
+                    None,
+                )
+            )
+
+        lib_gemm()
+        check_error(lib.infiniopDestroyGemmDescriptor(descriptor))
+        if q_nope_was_squeezed == True or q_absorb_was_squeezed == True:
+            gemm_q_nope_q_absorb = gemm_q_nope_q_absorb.unsqueeze(0)
+
+
+        #1 attn_weights = (torch.matmul(q_pe, k_pe.mT) + torch.matmul(q_nope, compressed_kv.mT)) * self.softmax_scale
+        q_pe_was_squeezed = False
+        k_pe_was_squeezed = False
+        if q_pe.ndim == 4:
+            q_pe = q_pe.squeeze(0)
+            q_pe_was_squeezed = True
+        if k_pe.ndim == 4:
+            k_pe = k_pe.squeeze(0)
+            k_pe_was_squeezed = True
+
+        q_pe_input_fp32 = q_pe.to(torch.float32)
+        k_pe_input_fp32 = k_pe.to(torch.float32)
+        gemm_q_pe_k_pe = torch.ones((q_pe_input_fp32.shape[0], q_pe_input_fp32.shape[1], k_pe_input_fp32.mT.shape[2]), dtype=torch.float32, device=input_device)
+
+        # print("111")
+        # print(q_pe_input_fp32.shape)
+        # print(k_pe_input_fp32.shape)
+        # print(gemm_q_pe_k_pe.shape)
+
+        a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [q_pe_input_fp32, k_pe_input_fp32.mT, gemm_q_pe_k_pe]]
+
+        lib.infinirtSetDevice(device, ctypes.c_int(0))
+
+        descriptor1 = infiniopGemmDescriptor_t()
+
+        check_error(
+            lib.infiniopCreateGemmDescriptor(
+                handle,
+                ctypes.byref(descriptor1),
+                c_tensor.descriptor,
+                a_tensor.descriptor,
+                b_tensor.descriptor,
+            )
+        )
+
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [a_tensor, b_tensor, c_tensor]:
+            tensor.destroyDesc(lib)
+
+        # Get workspace size and create workspace
+        workspace_size1 = c_uint64(0)
+        check_error(
+            lib.infiniopGetGemmWorkspaceSize(descriptor1, ctypes.byref(workspace_size1))
+        )
+        workspace1 = create_workspace(workspace_size1.value, q_pe_input_fp32.device)
+
+        # Execute infiniop gemm operator
+        def lib_gemm():
+            check_error(
+                lib.infiniopGemm(
+                    descriptor1,
+                    workspace1.data_ptr() if workspace1 is not None else None,
+                    workspace_size1.value,
+                    c_tensor.data,
+                    a_tensor.data,
+                    b_tensor.data,
+                    alpha,
+                    beta,
+                    None,
+                )
+            )
+
+        lib_gemm()
+        check_error(lib.infiniopDestroyGemmDescriptor(descriptor))
+        if q_pe_was_squeezed == True or k_pe_was_squeezed == True:
+            gemm_q_pe_k_pe = gemm_q_pe_k_pe.unsqueeze(0)
+
+
+        #2 attn_weights = (torch.matmul(q_pe, k_pe.mT) + torch.matmul(q_nope, compressed_kv.mT)) * self.softmax_scale
+        gemm_q_nope_q_absorb_was_squeezed = False
+        compressed_kv_was_squeezed = False
+        if gemm_q_nope_q_absorb.ndim == 4:
+            gemm_q_nope_q_absorb = gemm_q_nope_q_absorb.squeeze(0)
+            gemm_q_nope_q_absorb_was_squeezed = True
+        if compressed_kv.ndim == 4:
+            compressed_kv = compressed_kv.squeeze(0)
+            compressed_kv_was_squeezed =True
+
+        compressed_kv = compressed_kv.to(torch.float32)
+        gemm_q_nope_compressed_kv = torch.ones((gemm_q_nope_q_absorb.shape[0], gemm_q_nope_q_absorb.shape[1], compressed_kv.mT.shape[2]), dtype=torch.float32, device=input_device)
+
+        # print("222")
+        # print(gemm_q_nope_q_absorb.shape)
+        # print(compressed_kv.shape)
+        # print(gemm_q_nope_compressed_kv.shape)
+
+        a_tensor, b_tensor, c_tensor = [to_tensor(tensor, lib) for tensor in [gemm_q_nope_q_absorb, compressed_kv.mT, gemm_q_nope_compressed_kv]]
+
+        descriptor2 = infiniopGemmDescriptor_t()
+
+        check_error(
+            lib.infiniopCreateGemmDescriptor(
+                handle,
+                ctypes.byref(descriptor2),
+                c_tensor.descriptor,
+                a_tensor.descriptor,
+                b_tensor.descriptor,
+            )
+        )
+
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [a_tensor, b_tensor, c_tensor]:
+            tensor.destroyDesc(lib)
+
+        # Get workspace size and create workspace
+        workspace_size2 = c_uint64(0)
+        check_error(
+            lib.infiniopGetGemmWorkspaceSize(descriptor2, ctypes.byref(workspace_size2))
+        )
+        workspace2 = create_workspace(workspace_size2.value, gemm_q_nope_q_absorb.device)
+
+        # Execute infiniop gemm operator
+        def lib_gemm():
+            check_error(
+                lib.infiniopGemm(
+                    descriptor2,
+                    workspace2.data_ptr() if workspace2 is not None else None,
+                    workspace_size2.value,
+                    c_tensor.data,
+                    a_tensor.data,
+                    b_tensor.data,
+                    alpha,
+                    beta,
+                    None,
+                )
+            )
+
+        lib_gemm()
+        check_error(lib.infiniopDestroyGemmDescriptor(descriptor))
+        if gemm_q_nope_q_absorb_was_squeezed == True or compressed_kv_was_squeezed == True:
+            gemm_q_nope_compressed_kv = gemm_q_nope_compressed_kv.unsqueeze(0)
+
+        attn_weights = (gemm_q_pe_k_pe + gemm_q_nope_compressed_kv) * self.softmax_scale
+        attn_weights = attn_weights.to(input_dtype)
+
         #attn_weights [bsz, self.num_heads, q_len, kv_seq_len]
-        compressed_kv = compressed_kv.squeeze(1)
+        if compressed_kv_was_squeezed == True:
+            compressed_kv = compressed_kv.unsqueeze(0)
+
+        #attn_weights [bsz, self.num_heads, q_len, kv_seq_len]
+        compressed_kv = compressed_kv.squeeze(1).to(input_dtype)
+        
         """
         if attn_weights.size() != (bsz, self.num_heads, q_len, kv_seq_len):
             raise ValueError(
@@ -848,7 +1062,9 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
                 "Passing `padding_mask` is deprecated and will be removed in v4.37. Please make sure use `attention_mask` instead.`"
             )
         bsz, q_len, _ = hidden_states.size()
-
+        # print("hidden_states-shape-1:")
+        # print(hidden_states.shape)
+        # print()
         if q_len <= self.chunck_size:
             return self.forward_chunck(
                             hidden_states,
@@ -909,7 +1125,8 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
         cache_position: Optional[torch.LongTensor] = None,
         **kwargs,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
-        if os.name == 'nt' or get_compute_capability()<8 or device_manager.gpu_vendor != GPUVendor.NVIDIA:
+        # if os.name == 'nt' or get_compute_capability()<8 or device_manager.gpu_vendor != GPUVendor.NVIDIA:
+        if True:
             return self.forward_windows(
                 hidden_states,
                 attention_mask,
