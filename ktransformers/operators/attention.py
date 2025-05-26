@@ -134,6 +134,46 @@ lib.infiniopDestroyCausalSoftmaxDescriptor.argtypes = [
     infiniopCausalSoftmaxDescriptor_t,
 ]
 
+# initial InfiniCore Op Rope
+class RoPEDescriptor(Structure):
+    _fields_ = [("device", c_int32)]
+
+
+infiniopRoPEDescriptor_t = POINTER(RoPEDescriptor)
+
+lib.infiniopCreateRoPEDescriptor.restype = c_int32
+lib.infiniopCreateRoPEDescriptor.argtypes = [
+    infiniopHandle_t,
+    POINTER(infiniopRoPEDescriptor_t),
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+    infiniopTensorDescriptor_t,
+]
+
+lib.infiniopGetRoPEWorkspaceSize.restype = c_int32
+lib.infiniopGetRoPEWorkspaceSize.argtypes = [
+    infiniopRoPEDescriptor_t,
+    POINTER(c_uint64),
+]
+
+lib.infiniopRoPE.restype = c_int32
+lib.infiniopRoPE.argtypes = [
+    infiniopRoPEDescriptor_t,
+    c_void_p,
+    c_uint64,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+    c_void_p,
+]
+
+lib.infiniopDestroyRoPEDescriptor.restype = c_int32
+lib.infiniopDestroyRoPEDescriptor.argtypes = [
+    infiniopRoPEDescriptor_t,
+]
+
 
 def create_handle(lib):
     handle = infiniopHandle_t()
@@ -212,7 +252,165 @@ class KDeepseekV2Attention(BaseInjectedModule, DeepseekV2Attention):
             kv_seq_len += past_key_value.get_usable_length(kv_seq_len, self.layer_idx)
 
         cos, sin = self.rotary_emb(q_pe, position_ids)
-        q_pe, k_pe = apply_rotary_pos_emb(q_pe, k_pe, cos, sin)
+        # q_pe, k_pe = apply_rotary_pos_emb(q_pe, k_pe, cos, sin)
+
+        # replace apply_rotary_pos_emb with InfiniCore Op RoPE
+        # replace q_pe apply_rotary_pos_emb with InfiniCore RoPE
+        lib.infinirtSetDevice(device, ctypes.c_int(0))
+        handle = create_handle(lib)
+        input_dtype = q_pe.dtype
+        input_device = q_pe.device
+
+        q_pe_squeeze_flag = False
+        if q_pe.ndim == 4:
+            q_pe = q_pe.squeeze(0)
+            q_pe_squeeze_flag = True
+
+        q_pe_infinicore_input = q_pe.permute(1, 0 ,2).to(torch.float32)
+        cos_ktransformer = cos.contiguous()
+        sin_ktransformer = sin.contiguous()
+
+        q_pe_pos = torch.arange(0, q_pe_infinicore_input.shape[0], dtype=torch.int32, device=input_device)
+        cos_input_infinicore = cos_ktransformer[..., 0:cos_ktransformer.shape[-1] // 2].squeeze(0).to(torch.float32)
+        cos_input_infinicore = cos_input_infinicore.reshape(cos_input_infinicore.shape).contiguous()
+        sin_input_infinicore = sin_ktransformer[..., 0:sin_ktransformer.shape[-1] // 2].squeeze(0).to(torch.float32)
+        sin_input_infinicore = sin_input_infinicore.reshape(sin_input_infinicore.shape).contiguous()
+        q_pe_rope_out = torch.ones_like(q_pe_infinicore_input)
+
+        descriptor = infiniopRoPEDescriptor_t()
+        x_tensor, pos_tensor, sin_table_tensor, cos_table_tensor = [
+            to_tensor(tensor, lib, force_unsigned=True)
+            for tensor in [q_pe_infinicore_input, q_pe_pos, sin_input_infinicore, cos_input_infinicore]
+        ]       
+        y_tensor = to_tensor(q_pe_rope_out, lib)
+
+        check_error(
+            lib.infiniopCreateRoPEDescriptor(
+                handle,
+                ctypes.byref(descriptor),
+                y_tensor.descriptor,
+                x_tensor.descriptor,
+                pos_tensor.descriptor,
+                sin_table_tensor.descriptor,
+                cos_table_tensor.descriptor,
+            )
+        )
+
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [y_tensor, x_tensor, pos_tensor, sin_table_tensor, cos_table_tensor]:
+            tensor.destroyDesc(lib)
+
+        workspace_size = c_uint64(0)
+        check_error(
+            lib.infiniopGetRoPEWorkspaceSize(descriptor, ctypes.byref(workspace_size))
+        )
+        workspace = create_workspace(workspace_size.value, q_pe.device)
+
+        def lib_rope():
+            check_error(
+                lib.infiniopRoPE(
+                    descriptor,
+                    workspace.data_ptr() if workspace is not None else None,
+                    workspace_size.value,
+                    y_tensor.data,
+                    x_tensor.data,
+                    pos_tensor.data,
+                    sin_table_tensor.data,
+                    cos_table_tensor.data,
+                    None,
+                )
+            )
+
+        lib_rope()
+        check_error(lib.infiniopDestroyRoPEDescriptor(descriptor))
+
+        q_pe_rope_out = q_pe_rope_out.permute(1,0,2).contiguous()
+        q_pe_rope_out_even = q_pe_rope_out[..., 0::2]
+        q_pe_rope_out_odd = q_pe_rope_out[..., 1::2]
+
+        q_pe_rope_infinicore = torch.cat((q_pe_rope_out_even, q_pe_rope_out_odd), dim=-1)
+        if q_pe_squeeze_flag == True:
+            q_pe_rope_infinicore = q_pe_rope_infinicore.unsqueeze(0)
+        q_pe = q_pe_rope_infinicore.to(input_dtype)
+
+
+        # replace k_pe apply_rotary_pos_emb with InfiniCore RoPE
+        input_dtype = k_pe.dtype
+
+        k_pe_squeeze_flag = False
+        if k_pe.ndim == 4:
+            k_pe = k_pe.squeeze(0)
+            k_pe_squeeze_flag = True
+        k_pe_infinicore_input = k_pe.permute(1, 0 ,2).to(torch.float32)
+        
+        cos_ktransformer = cos.contiguous()
+        sin_ktransformer = sin.contiguous()
+
+        k_pe_pos = torch.arange(0, k_pe_infinicore_input.shape[0], dtype=torch.int32, device=input_device)
+        cos_input_infinicore1 = cos_ktransformer[..., 0:cos_ktransformer.shape[-1] // 2].squeeze(0).to(torch.float32)
+        cos_input_infinicore1 = cos_input_infinicore1.reshape(cos_input_infinicore1.shape).contiguous()
+        sin_input_infinicore1 = sin_ktransformer[..., 0:sin_ktransformer.shape[-1] // 2].squeeze(0).to(torch.float32)
+        sin_input_infinicore1 = sin_input_infinicore1.reshape(sin_input_infinicore1.shape).contiguous()
+       
+        k_pe_rope_out = torch.ones_like(k_pe_infinicore_input)
+
+        lib.infinirtSetDevice(device, ctypes.c_int(0))
+        descriptor1 = infiniopRoPEDescriptor_t()
+        x_tensor, pos_tensor, sin_table_tensor, cos_table_tensor = [
+            to_tensor(tensor, lib, force_unsigned=True)
+            for tensor in [k_pe_infinicore_input, k_pe_pos, sin_input_infinicore1, cos_input_infinicore1]
+        ]       
+        y_tensor = to_tensor(k_pe_rope_out, lib)
+
+        check_error(
+            lib.infiniopCreateRoPEDescriptor(
+                handle,
+                ctypes.byref(descriptor1),
+                y_tensor.descriptor,
+                x_tensor.descriptor,
+                pos_tensor.descriptor,
+                sin_table_tensor.descriptor,
+                cos_table_tensor.descriptor,
+            )
+        )
+
+        # Invalidate the shape and strides in the descriptor to prevent them from being directly used by the kernel
+        for tensor in [y_tensor, x_tensor, pos_tensor, sin_table_tensor, cos_table_tensor]:
+            tensor.destroyDesc(lib)
+
+        workspace_size1 = c_uint64(0)
+        check_error(
+            lib.infiniopGetRoPEWorkspaceSize(descriptor1, ctypes.byref(workspace_size1))
+        )
+        workspace1 = create_workspace(workspace_size1.value, k_pe.device)
+
+        def lib_rope():
+            check_error(
+                lib.infiniopRoPE(
+                    descriptor1,
+                    workspace1.data_ptr() if workspace1 is not None else None,
+                    workspace_size1.value,
+                    y_tensor.data,
+                    x_tensor.data,
+                    pos_tensor.data,
+                    sin_table_tensor.data,
+                    cos_table_tensor.data,
+                    None,
+                )
+            )
+
+        lib_rope()
+        check_error(lib.infiniopDestroyRoPEDescriptor(descriptor1))
+
+        k_pe_rope_out = k_pe_rope_out.permute(1,0,2).contiguous()
+        k_pe_rope_out_even = k_pe_rope_out[..., 0::2]
+        k_pe_rope_out_odd = k_pe_rope_out[..., 1::2]
+        k_pe_rope_infinicore = torch.cat((k_pe_rope_out_even, k_pe_rope_out_odd), dim=-1)
+
+        if k_pe_squeeze_flag == True:
+            k_pe_rope_infinicore = k_pe_rope_infinicore.unsqueeze(0)
+        k_pe = k_pe_rope_infinicore.to(input_dtype)
+
 
         if past_key_value is not None:
             cache_kwargs = {"sin": sin, "cos": cos, "cache_position": cache_position}  # Specific to RoPE models
